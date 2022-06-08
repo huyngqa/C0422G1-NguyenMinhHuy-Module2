@@ -1,38 +1,30 @@
 package ss3_array_and_method.bai_tap;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class Array2DMaxElement {
+public class Matrix {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Nhập số hàng của mảng: ");
-        int row = Integer.parseInt(scanner.nextLine());
-        System.out.print("Nhập số cột của mảng: ");
-        int column = Integer.parseInt(scanner.nextLine());
-        int[][] arrays = new int[row][column];
+        System.out.print("Nhập vào số lượng phần tử: ");
+        int size = Integer.parseInt(scanner.nextLine());
+        int[][] arrays = new int[size][size];
 
-        System.out.println("Nhập các phần tử của mảng.");
+        System.out.println("Nhập phần tử cho ma trận!");
         inputArray2D(arrays);
 
-        System.out.println("Mảng bạn nhập là");
+        System.out.println("Ma trận bạn vừa nhập là: ");
         outputArray2D(arrays);
 
-        System.out.println("Giá trị lớn nhất trong mảng là: " + findMaxArray2D(arrays));
+        System.out.println("Tổng 2 đường chéo của ma trận là: " + sumDiagonalLineOfMatrix(arrays));
     }
 
-    public static int findMaxArray2D(int[][] arrays) {
-        int max = arrays[0][0];
+    public static int sumDiagonalLineOfMatrix(int[][] arrays) {
+        int sum = 0;
         for (int i = 0; i < arrays.length; i++) {
-            for (int j = 0; j < arrays[i].length; j++) {
-                if(arrays[i][j] > max) {
-                    max = arrays[i][j];
-                }
-            }
+            sum += arrays[i][i] + arrays[i][arrays.length - i - 1];
         }
-        return max;
+        return sum;
     }
-
     public static void inputArray2D(int[][] arrays) {
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < arrays.length; i++) {
@@ -40,8 +32,10 @@ public class Array2DMaxElement {
                 System.out.printf("arr[%d][%d] = ", i, j);
                 arrays[i][j] = Integer.parseInt(scanner.nextLine());
             }
+            System.out.println();
         }
     }
+
     public static void outputArray2D(int[][] arrays) {
         for (int i = 0; i < arrays.length; i++) {
             for (int j = 0; j < arrays[i].length; j++) {
