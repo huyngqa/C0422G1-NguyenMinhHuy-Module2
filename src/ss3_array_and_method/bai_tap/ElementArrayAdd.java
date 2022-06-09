@@ -15,14 +15,11 @@ public class ElementArrayAdd {
         System.out.print("Ví trí bạn muốn thêm vào: ");
         int index = Integer.parseInt(scanner.nextLine());
 
-        for (int i = arrays.length - 1; i >= 0; i--) {
-
-            for (int j = arrays.length - 1; j > index; j--) {
-                arrays[j] = arrays[j - 1];
-            }
-            arrays[index] = value;
-            break;
+        for (int i = arrays.length - 1; i > index; i--) {
+            arrays[i] = arrays[i - 1];
         }
+        arrays[index] = value;
+
         System.out.println("Mảng sau khi thêm giá trị: " + value + " vào vị trí thứ: " + index
                 + " là: " + Arrays.toString(arrays));
     }
