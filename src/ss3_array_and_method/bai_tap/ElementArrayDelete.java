@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class ElementArrayDelete {
     public static void main(String[] args) {
-        int[] arrays = {10, 6, 3, 9, 4, 5, 0, 0};
+        int[] arrays = {10, 6, 3, 4, 4, 5, 0, 0};
         System.out.println("Mảng của bạn là: " + Arrays.toString(arrays));
 
         Scanner scanner = new Scanner(System.in);
@@ -18,6 +18,7 @@ public class ElementArrayDelete {
                     arrays[j] = arrays[j + 1];
                 }
                 arrays[arrays.length - 1] = 0;
+                i--;
             }
         }
         System.out.println("Mảng của bản sau khi xoá giá trị: " + value + " là: " + Arrays.toString(arrays));
