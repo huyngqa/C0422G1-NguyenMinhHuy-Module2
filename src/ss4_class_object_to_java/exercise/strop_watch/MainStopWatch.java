@@ -13,6 +13,6 @@ public class MainStopWatch {
         stopWatch.stop();
         System.out.println("Thời gian kết thúc thực thi: " + stopWatch.getEndTime());
         System.out.println("Thuật toán thực thi hết: "
-                + stopWatch.getElapsedTime(stopWatch.getStartTime(), stopWatch.getEndTime()) + "mili giây");
+                + stopWatch.getElapsedTime() + "mili giây");
     }
 }
