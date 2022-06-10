@@ -26,9 +26,7 @@ public class StopWatch {
     }
 
     public long getElapsedTime() {
-        long start = this.startTime.getTime();
-        long end = this.endTime.getTime();
-        return end - start;
+        return this.startTime.getTime() - this.endTime.getTime();
     }
 
 }
