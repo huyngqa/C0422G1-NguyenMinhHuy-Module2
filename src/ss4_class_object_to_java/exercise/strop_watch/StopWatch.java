@@ -7,6 +7,7 @@ public class StopWatch {
     private Date endTime;
 
     public StopWatch() {
+        this.startTime = new Date();
     }
 
     public Date getStartTime() {
