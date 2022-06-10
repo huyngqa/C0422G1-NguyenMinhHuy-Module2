@@ -13,16 +13,8 @@ public class MainQuadraticEquation {
         double c = Double.parseDouble(scanner.nextLine());
 
         QuadraticEquation equation = new QuadraticEquation(a, b, c);
-        double delta = equation.getDiscriminant();
-        System.out.println("Delta của phương trình là: " + delta);
-        if (delta > 0) {
-            System.out.println("Phương trình có hai nghiệm: x1 = " + equation.getRoot1()
-                    + ", x2 = " + equation.getRoot2());
-        } else if(delta == 0) {
-            System.out.println("Phương trình có 1 nghiệm x1 = x2 = " + equation.getRoot1());
-        } else {
-            System.out.println("Phương trình vô nghiệm");
-        }
 
+        System.out.println("Delta của phương trình là: " + equation.getDiscriminant());
+        System.out.println(equation.toString());
     }
 }

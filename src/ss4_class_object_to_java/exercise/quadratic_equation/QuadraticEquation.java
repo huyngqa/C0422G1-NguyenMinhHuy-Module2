@@ -49,4 +49,14 @@ public class QuadraticEquation {
     public double getRoot2() {
         return ((-this.b) - Math.sqrt(getDiscriminant())) / (2 * this.a);
     }
+    public String toString() {
+        if (getDiscriminant() > 0) {
+            return  "Phương trình có hai nghiệm: x1 = " + getRoot1()
+                    + ", x2 = " + getRoot2();
+        } else if(getDiscriminant() == 0) {
+            return "Phương trình có 1 nghiệm x1 = x2 = " + getRoot1();
+        } else {
+            return "Phương trình vô nghiệm";
+        }
+    }
 }
