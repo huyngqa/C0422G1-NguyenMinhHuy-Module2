@@ -15,6 +15,6 @@ public class MainQuadraticEquation {
         QuadraticEquation equation = new QuadraticEquation(a, b, c);
 
         System.out.println("Delta của phương trình là: " + equation.getDiscriminant());
-        System.out.println(equation.toString());
+        System.out.println(equation.getResult());
     }
 }

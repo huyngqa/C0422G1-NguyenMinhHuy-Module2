@@ -49,7 +49,7 @@ public class QuadraticEquation {
     public double getRoot2() {
         return ((-this.b) - Math.sqrt(getDiscriminant())) / (2 * this.a);
     }
-    public String toString() {
+    public String getResult() {
         if (getDiscriminant() > 0) {
             return  "Phương trình có hai nghiệm: x1 = " + getRoot1()
                     + ", x2 = " + getRoot2();
