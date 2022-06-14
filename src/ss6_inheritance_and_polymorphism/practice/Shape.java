@@ -1,12 +1,10 @@
 package ss6_inheritance_and_polymorphism.practice;
 
 public class Shape {
-    private String color;
-    private boolean filled;
+    private String color = "green";
+    private boolean filled = true;
 
     public Shape() {
-        color = "green";
-        filled = true;
     }
 
     public String getColor() {
