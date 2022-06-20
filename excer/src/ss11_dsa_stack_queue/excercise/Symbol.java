@@ -18,7 +18,7 @@ public class Symbol {
                 if(bStack.isEmpty()) {
                     return false;
                 } else {
-                    bStack.pop();
+                      bStack.pop();
                 }
             }
         }
