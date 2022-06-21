@@ -30,9 +30,10 @@ public class ProductManager {
             System.out.println(product);
         }
     }
+
     public void editProductById(int id) {
         for (int i = 0; i < products.size(); i++) {
-            if(products.get(i).getProductId() == id) {
+            if (products.get(i).getProductId() == id) {
                 System.out.print("Sửa mã sản phẩm: ");
                 products.get(i).setProductId(Integer.parseInt(scanner.nextLine()));
                 System.out.print("Sửa tên sản phẩm: ");
@@ -44,9 +45,10 @@ public class ProductManager {
         }
         System.out.println("Mã sản phẩm bạn nhập không đúng");
     }
+
     public void deleteProductById(int id) {
         for (int i = 0; i < products.size(); i++) {
-            if(products.get(i).getProductId() == id) {
+            if (products.get(i).getProductId() == id) {
                 products.remove(products.get(i));
                 System.out.println("Bạn đã xoá thành công");
                 return;
@@ -54,6 +56,7 @@ public class ProductManager {
         }
         System.out.println("Mã sản phẩm bạn nhập không đúng");
     }
+
     public List<Product> searchProductByName(String productName) {
         List<Product> searchProducts = new ArrayList<>();
         for (int i = 0; i < products.size(); i++) {
@@ -63,10 +66,9 @@ public class ProductManager {
         }
         return searchProducts;
     }
+
     public void sortProductByPrice() {
         Collections.sort(products);
-        for (Product product : products) {
-            System.out.println(product);
-        }
+        displayProduct();
     }
 }
