@@ -1,4 +1,4 @@
-package dto;
+package util;
 
 import model.Producer;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ProducerDTO {
+public class ProducerList {
     public static List<Producer> producers = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
