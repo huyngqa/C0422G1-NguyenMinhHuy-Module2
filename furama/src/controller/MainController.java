@@ -15,25 +15,25 @@ public class MainController {
                     "\n 5. Promotion Management" +
                     "\n 6. Exit");
             System.out.print("Your choose function: ");
-            int choose = Integer.parseInt(scanner.nextLine());
+            String choose = scanner.nextLine();
             System.out.println();
             switch (choose) {
-                case 1:
+                case "1":
                     EmployeeController.displayEmployeeMenu();
                     break;
-                case 2:
+                case "2":
                     CustomerController.displayCustomerMenu();
                     break;
-                case 3:
+                case "3":
                     FacilityController.displayFacilityMenu();
                     break;
-                case 4:
+                case "4":
                     BookingController.displayBookingMenu();
                     break;
-                case 5:
+                case "5":
                     PromotionController.displayPromotionMenu();
                     break;
-                case 6:
+                case "6":
                     System.out.println("Exit Menu");
                     temp = false;
                     break;

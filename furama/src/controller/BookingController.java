@@ -13,20 +13,20 @@ public class BookingController {
                     "\n 5. Edit contracts" +
                     "\n 6. Return main menu");
             System.out.print("Your choose function: ");
-            int choose = Integer.parseInt(scanner.nextLine());
+            String choose = scanner.nextLine();
             System.out.println();
             switch (choose) {
-                case 1:
+                case "1":
                     break;
-                case 2:
+                case "2":
                     break;
-                case 3:
+                case "3":
                     break;
-                case 4:
+                case "4":
                     break;
-                case 5:
+                case "5":
                     break;
-                case 6:
+                case "6":
                     break;
                 default:
                     System.out.println("Your choose is not exist");

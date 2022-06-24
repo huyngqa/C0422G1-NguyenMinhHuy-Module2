@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CheckTriangle {
     private static void checkTriangle(int a, int b, int c) throws IllegalTriangleException {
         boolean checkTriangle = (a + b <= c) || (a + c <= b) || (c + b <= a);
-        if (a < 0 || b < 0 || c < 0) {
+        if (a <= 0 || b <= 0 || c <= 0) {
             throw new IllegalTriangleException("Cạnh bạn nhập là số âm");
         } else if (checkTriangle) {
             throw new IllegalTriangleException("Ba cạnh bạn nhập không phải là cạnh tam giác");

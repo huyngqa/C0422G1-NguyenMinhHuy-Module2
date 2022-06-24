@@ -15,17 +15,17 @@ public class CustomerController {
                     "\n 3. Edit customer" +
                     "\n 4. Return main menu");
             System.out.print("Your choose function: ");
-            int choose = Integer.parseInt(scanner.nextLine());
+            String choose = scanner.nextLine();
             System.out.println();
             switch (choose) {
-                case 1:
+                case "1":
                     customerService.display();
                     break;
-                case 2:
+                case "2":
                     break;
-                case 3:
+                case "3":
                     break;
-                case 4:
+                case "4":
                     break;
                 default:
                     System.out.println("Your choose is not exist");
