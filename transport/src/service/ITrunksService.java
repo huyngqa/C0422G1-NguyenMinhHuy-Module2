@@ -1,2 +1,4 @@
-package service;public class ITrunksService {
+package service;
+
+public interface ITrunksService extends IService {
 }

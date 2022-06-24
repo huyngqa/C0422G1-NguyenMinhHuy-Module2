@@ -1,7 +1,9 @@
 package view;
 
-public class Hello {
+import controller.MainController;
+
+public class View {
     public static void main(String[] args) {
-        System.out.println("Hello n");
+        MainController.displayMainMenu();
     }
 }

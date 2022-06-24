@@ -1,2 +1,6 @@
-package service;public interface IBikeService {
+package service;
+
+import model.Bike;
+
+public interface IBikeService extends IService {
 }

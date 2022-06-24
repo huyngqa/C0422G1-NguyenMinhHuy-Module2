@@ -1,2 +1,4 @@
-package service;public interface ICarService {
+package service;
+
+public interface ICarService extends IService{
 }

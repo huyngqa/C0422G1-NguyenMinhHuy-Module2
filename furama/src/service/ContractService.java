@@ -1,2 +1,4 @@
-package service;public class ContractService {
+package service;
+
+public interface ContractService extends Service{
 }

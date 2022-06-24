@@ -1,2 +1,4 @@
-package service;public interface FacilityService {
+package service;
+
+public interface FacilityService extends Service{
 }

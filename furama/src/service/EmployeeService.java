@@ -1,2 +1,4 @@
-package service;public interface EmployeeService {
+package service;
+
+public interface EmployeeService extends Service{
 }
