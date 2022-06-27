@@ -19,9 +19,6 @@ public class CopyFile {
         List<String> list = new ArrayList<>();
         try {
             File file = new File(pathFile);
-            if (!file.exists()) {
-                throw new FileNotFoundException();
-            }
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String line = "";
             while((line = bufferedReader.readLine()) != null) {
