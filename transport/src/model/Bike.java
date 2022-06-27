@@ -24,10 +24,15 @@ public class Bike extends Transport {
     }
 
     @Override
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + wattage;
+    }
+
+    @Override
     public String toString() {
         return "Bike{" +
                 "seaOfControl='" + super.getSeaOfControl() + '\'' +
-                ", producerName='" + super.getProducer() + '\'' +
+                ", producerName='" + super.getProducer().getProducerName() + '\'' +
                 ", yearOfProduction='" + super.getYearOfProduction() + '\'' +
                 ", owner='" + super.getOwner() + '\'' +
                 "wattage=" + wattage + "hz" +

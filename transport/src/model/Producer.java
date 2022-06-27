@@ -38,6 +38,10 @@ public class Producer {
         this.country = country;
     }
 
+    public String getInformationToCSV() {
+        return id + "," + producerName + "," + country;
+    }
+
     @Override
     public String toString() {
         return "Producer{" +

@@ -24,10 +24,15 @@ public class Trunks extends Transport {
     }
 
     @Override
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + tonnage;
+    }
+
+    @Override
     public String toString() {
         return "Trunks{" +
                 "seaOfControl='" + super.getSeaOfControl() + '\'' +
-                ", producerName='" + super.getProducer() + '\'' +
+                ", producerName='" + super.getProducer().getProducerName() + '\'' +
                 ", yearOfProduction='" + super.getYearOfProduction() + '\'' +
                 ", owner='" + super.getOwner() + '\'' +
                 "tonnage=" + tonnage +

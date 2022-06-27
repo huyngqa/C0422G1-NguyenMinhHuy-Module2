@@ -12,10 +12,7 @@ public class BikeService implements IBikeService {
     static List<Bike> bikeList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
-    static {
-        bikeList.add(new Bike("43F1-34124", ProducerList.producers.get(4), "2009", "huy", 1002));
-        bikeList.add(new Bike("43D1-71234", ProducerList.producers.get(4), "2011", "huy", 2004));
-    }
+
 
     @Override
     public void add() {
@@ -23,7 +20,7 @@ public class BikeService implements IBikeService {
         String seaOfControl = scanner.nextLine();
         System.out.print("Nhập tên nhà sản xuất: ");
         String producerName = scanner.nextLine();
-        Producer producer = ProducerList.checkProducer(producerName);
+        Producer producer = ProducerService.checkProducer(producerName);
         System.out.print("Nhập năm sản xuất: ");
         String yearOfProduction = scanner.nextLine();
         System.out.print("Nhập tên chủ sở hữu: ");

@@ -12,11 +12,6 @@ public class CarService implements ICarService {
     static List<Car> carList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
-    static {
-        carList.add(new Car("43B1-07907", ProducerList.producers.get(0), "2018", "huy", 4, "xe hơi"));
-        carList.add(new Car("43B1-07907", ProducerList.producers.get(3), "2009", "huy", 30, "xe du lịch"));
-        carList.add(new Car("43B1-06720", ProducerList.producers.get(2), "2012", "huy", 2, "xe hơi"));
-    }
 
     @Override
     public void add() {
@@ -24,7 +19,7 @@ public class CarService implements ICarService {
         String seaOfControl = scanner.nextLine();
         System.out.print("Nhập tên nhà sản xuất: ");
         String producerName = scanner.nextLine();
-        Producer producer = ProducerList.checkProducer(producerName);
+        Producer producer = ProducerService.checkProducer(producerName);
         System.out.print("Nhập năm sản xuất: ");
         String yearOfProduction = scanner.nextLine();
         System.out.print("Nhập tên chủ sở hữu: ");

@@ -36,10 +36,15 @@ public class Car extends Transport {
     }
 
     @Override
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + numOfSeats + "," + vehicleType;
+    }
+
+    @Override
     public String toString() {
         return "Car{" +
                 "seaOfControl='" + super.getSeaOfControl() + '\'' +
-                ", producerName='" + super.getProducer() + '\'' +
+                ", producerName='" + super.getProducer().getProducerName() + '\'' +
                 ", yearOfProduction='" + super.getYearOfProduction() + '\'' +
                 ", owner='" + super.getOwner() + '\'' +
                 "numOfSeats=" + numOfSeats +

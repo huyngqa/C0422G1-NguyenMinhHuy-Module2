@@ -48,11 +48,15 @@ public abstract class Transport {
         this.owner = owner;
     }
 
+    public String getInformationToCSV() {
+        return seaOfControl + "," + producer.getProducerName() + "," + yearOfProduction + "," + owner;
+    }
+
     @Override
     public String toString() {
         return "Transport{" +
                 "seaOfControl='" + seaOfControl + '\'' +
-                ", producerName='" + producer + '\'' +
+                ", producerName='" + producer.getProducerName() + '\'' +
                 ", yearOfProduction='" + yearOfProduction + '\'' +
                 ", owner='" + owner + '\'' +
                 '}';

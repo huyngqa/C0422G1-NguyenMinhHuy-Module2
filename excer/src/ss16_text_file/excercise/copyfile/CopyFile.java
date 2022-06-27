@@ -8,6 +8,11 @@ public class CopyFile {
     public static void main(String[] args) {
         CopyFile copyFile = new CopyFile();
         List<String> list = copyFile.readFile("excer/src/ss16_text_file/excercise/copyfile/str.csv");
+        int result = 0;
+        for (int i = 0; i < list.size(); i++) {
+            result+=list.get(i).length();
+        }
+        System.out.println("File có: " + result +" kí tự");
         copyFile.writeFile("excer/src/ss16_text_file/excercise/copyfile/kq.csv", list);
     }
     public List<String> readFile(String pathFile) {
