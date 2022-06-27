@@ -1,7 +1,5 @@
 package model;
 
-import java.time.LocalDateTime;
-
 public abstract class Facility {
     private String nameService;
     private double usableArea;

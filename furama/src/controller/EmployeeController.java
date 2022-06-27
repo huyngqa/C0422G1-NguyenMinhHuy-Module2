@@ -1,30 +1,50 @@
 package controller;
 
+import service.EmployeeService;
+import service.impl.EmployeeServiceImpl;
+
 import java.util.Scanner;
 
 public class EmployeeController {
     private static Scanner scanner = new Scanner(System.in);
+    private static EmployeeService employeeService = new EmployeeServiceImpl();
 
     public static void displayEmployeeMenu() {
-        System.out.println("Select function " +
-                "\n 1. Display list employees" +
-                "\n 2. Add new employee" +
-                "\n 3. Edit Employee" +
-                "\n 4. Return main menu");
-        System.out.print("Your choose function: ");
-        String choose = scanner.nextLine();
-        System.out.println();
-        switch (choose) {
-            case "1":
-                break;
-            case "2":
-                break;
-            case "3":
-                break;
-            case "4":
-                break;
-            default:
-                System.out.println("Your choose is not exist");
-        }
+        String choose = "";
+        do {
+            System.out.println("Lựa chọn chức năng " +
+                    "\n 1. Hiển thị danh sách nhân viên" +
+                    "\n 2. Thêm mới nhân viên" +
+                    "\n 3. Chỉnh sửa thông tin nhân viên" +
+                    "\n 4. Quay về menu");
+            System.out.print("Nhập lựa chọn của bạn: ");
+            choose = scanner.nextLine();
+            System.out.println();
+            switch (choose) {
+                case "1":
+                    System.out.println("Danh sách nhân viên");
+                    employeeService.display();
+                    System.out.println();
+                    break;
+                case "2":
+                    System.out.println("Thêm mới nhân viên");
+                    employeeService.add();
+                    System.out.println();
+                    break;
+                case "3":
+                    System.out.println("Chỉnh sửa thông tin nhân viên");
+                    System.out.print("Nhập mã nhân viên bạn muốn chỉnh sửa: ");
+                    String id = scanner.nextLine();
+                    employeeService.editById(id);
+                    System.out.println();
+                    break;
+                case "4":
+                    System.out.println("Trờ về menu chính!");
+                    break;
+                default:
+                    System.out.println("Lựa chọn của bạn chưa có! Vui lòng chọn lại");
+            }
+        } while (!choose.equals("4"));
+
     }
 }

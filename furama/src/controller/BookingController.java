@@ -4,16 +4,19 @@ import java.util.Scanner;
 
 public class BookingController {
     private static Scanner scanner = new Scanner(System.in);
+
     public static void displayBookingMenu() {
-            System.out.println("Select function " +
-                    "\n 1. Display list booking" +
-                    "\n 2. Add new booking" +
-                    "\n 3. Create new contracts" +
-                    "\n 4. Display list contracts" +
-                    "\n 5. Edit contracts" +
-                    "\n 6. Return main menu");
-            System.out.print("Your choose function: ");
-            String choose = scanner.nextLine();
+        String choose = "";
+        do {
+            System.out.println("Lựa chọn chức năng " +
+                    "\n 1. Hiển thị danh sách booking" +
+                    "\n 2. Thêm mới booking" +
+                    "\n 3. Tạo hợp đồng mới" +
+                    "\n 4. Hiển thị danh sách hợp đồng" +
+                    "\n 5. Chỉnh sửa hợp đồng" +
+                    "\n 6. Quay về menu chính");
+            System.out.print("Nhập  vào lựa chọn của bạn: ");
+            choose = scanner.nextLine();
             System.out.println();
             switch (choose) {
                 case "1":
@@ -29,7 +32,8 @@ public class BookingController {
                 case "6":
                     break;
                 default:
-                    System.out.println("Your choose is not exist");
+                    System.out.println("Lựa chọn của bạn chưa có! Vui lòng chọn lại");
             }
+        } while (!choose.equals("6"));
     }
 }

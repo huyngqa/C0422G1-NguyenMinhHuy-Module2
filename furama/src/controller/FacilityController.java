@@ -4,14 +4,17 @@ import java.util.Scanner;
 
 public class FacilityController {
     private static Scanner scanner = new Scanner(System.in);
+
     public static void displayFacilityMenu() {
-            System.out.println("Select function " +
-                    "\n 1. Display list facility" +
-                    "\n 2. Add new facility" +
-                    "\n 3. Display list facility maintenance" +
-                    "\n 4. Return main menu");
-            System.out.print("Your choose function: ");
-        String choose = scanner.nextLine();
+        String choose = "";
+        do {
+            System.out.println("Lựa chọn của bạn " +
+                    "\n 1. Hiển thị các dịch vụ" +
+                    "\n 2. Thêm mới dịch vụ" +
+                    "\n 3. Hiển thị danh sách đang bảo trì" +
+                    "\n 4. Quay lại menu");
+            System.out.print("Nhập lựa chọn của bạn: ");
+            choose = scanner.nextLine();
             System.out.println();
             switch (choose) {
                 case "1":
@@ -23,7 +26,9 @@ public class FacilityController {
                 case "4":
                     break;
                 default:
-                    System.out.println("Your choose is not exist");
+                    System.out.println("Lựa chọn của bạn chưa có! Vui lòng chọn lại");
             }
+        } while (!choose.equals("4"));
     }
+
 }

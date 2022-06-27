@@ -1,5 +1,7 @@
 package model;
 
+import common.FormatDate;
+
 import java.time.LocalDate;
 
 public abstract class Person {
@@ -84,10 +86,10 @@ public abstract class Person {
     public String toString() {
         return "Mã id: " + personId + "\n" +
                 "Tên: " + name + "\n" +
-                "Ngày sinh: " + dateOfBirth + "\n" +
+                "Ngày sinh: " + FormatDate.getDateFormatted(dateOfBirth) + "\n" +
                 "Giới tính: " + sex + "\n" +
                 "Số CMND: " + identityCardNumber + "\n" +
                 "Số điện thoại: " + tel + "\n" +
-                "Email:'" + email + "\n";
+                "Email: " + email + "\n";
     }
 }

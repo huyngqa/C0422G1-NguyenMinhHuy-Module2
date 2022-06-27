@@ -5,18 +5,18 @@ import java.time.LocalDate;
 public class Employee extends Person {
     private String level;
     private String position;
-    private double salary;
+    private int salary;
 
     public Employee() {
     }
 
-    public Employee(String level, String position, double salary) {
+    public Employee(String level, String position, int salary) {
         this.level = level;
         this.position = position;
         this.salary = salary;
     }
 
-    public Employee(String personId, String name, LocalDate dateOfBirth, String sex, String identityCardNumber, String tel, String email, String level, String position, double salary) {
+    public Employee(String personId, String name, LocalDate dateOfBirth, String sex, String identityCardNumber, String tel, String email, String level, String position, int salary) {
         super(personId, name, dateOfBirth, sex, identityCardNumber, tel, email);
         this.level = level;
         this.position = position;
@@ -39,11 +39,11 @@ public class Employee extends Person {
         this.position = position;
     }
 
-    public double getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 

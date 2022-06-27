@@ -3,6 +3,6 @@ package service;
 public interface Service {
     void add();
     void display();
-    void edit();
-    void delete();
+    void editById(String id);
+    void deleteById(String id);
 }
