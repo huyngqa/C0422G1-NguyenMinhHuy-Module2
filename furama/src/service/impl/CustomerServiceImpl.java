@@ -2,16 +2,17 @@ package service.impl;
 
 import model.Customer;
 import service.CustomerService;
+import util.ReadAndWriteFurama;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerService {
     private Scanner scanner = new Scanner(System.in);
-    private List<Customer> customers = new LinkedList<>();
+    private final String PATH_FILE_CUSTOMER = "furama/src/data/customer.csv";
 
     @Override
     public void add() {
@@ -60,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
                 case "4":
                     typeCustomer = "Silver";
                     break;
-                case "5" :
+                case "5":
                     typeCustomer = "Member";
                     break;
                 default:
@@ -69,14 +70,17 @@ public class CustomerServiceImpl implements CustomerService {
         } while (typeCustomer.equals(""));
         System.out.print("Nhập địa chỉ khách hàng: ");
         String address = scanner.nextLine();
+        List<Customer> customers = new ArrayList<>();
         customers.add(new Customer(customerId, name, birthDay, sex, identityCardNumber, tel, email, typeCustomer, address));
+        ReadAndWriteFurama.writeCustomerToCSV(customers, PATH_FILE_CUSTOMER, true);
         System.out.println("Bạn đã thêm thành công khách hàng: " + name);
     }
 
     @Override
     public void display() {
+        List<Customer> customers = ReadAndWriteFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         if (customers.isEmpty()) {
-            System.out.println("Chưa có dữ liệu, mời bạn thêm vào.");
+            System.out.println("Chưa có thông tin, mời bạn thêm vào");
         } else {
             for (Customer customer : customers) {
                 System.out.println(customer);
@@ -86,6 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void editById(String id) {
+        List<Customer> customers = ReadAndWriteFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         for (int i = 0; i < customers.size(); i++) {
             if (customers.get(i).getPersonId().equalsIgnoreCase(id)) {
                 System.out.println(customers.get(i));
@@ -150,6 +155,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customers.get(i).setAddress(scanner.nextLine());
                 System.out.println("Thông tin đã được cập nhật");
                 System.out.println(customers.get(i));
+                ReadAndWriteFurama.writeCustomerToCSV(customers, PATH_FILE_CUSTOMER, false);
                 return;
             }
         }

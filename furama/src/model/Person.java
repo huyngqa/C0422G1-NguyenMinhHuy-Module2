@@ -82,6 +82,10 @@ public abstract class Person {
         this.email = email;
     }
 
+    public String getInformationToCSV() {
+        return personId + "," + name + "," + dateOfBirth + "," + sex + "," + identityCardNumber + "," + tel + "," + email;
+    }
+
     @Override
     public String toString() {
         return "Mã id: " + personId + "\n" +

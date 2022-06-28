@@ -47,6 +47,10 @@ public class Employee extends Person {
         this.salary = salary;
     }
 
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + level + "," + position + "," + salary;
+    }
+
     @Override
     public String toString() {
         return "Nhân viên{" +
@@ -54,6 +58,7 @@ public class Employee extends Person {
                 "Trình độ: " + level + "\n" +
                 "Chức vụ: " + position + "\n" +
                 "Lương: " + salary +
-                '}';
+                '}' + "\n" +
+                "-----------------------------------";
     }
 }

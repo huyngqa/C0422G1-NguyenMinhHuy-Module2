@@ -2,6 +2,7 @@ package service.impl;
 
 import model.Employee;
 import service.EmployeeService;
+import util.ReadAndWriteFurama;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -10,8 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    private List<Employee> employees = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+    private final String PATH_FILE_EMPLOYEE = "furama/src/data/employee.csv";
 
     @Override
     public void add() {
@@ -107,13 +108,15 @@ public class EmployeeServiceImpl implements EmployeeService {
                 System.err.println("Vui lòng nhập số!");
             }
         }
-
+        List<Employee> employees = ReadAndWriteFurama.readEmployeeToCSV(PATH_FILE_EMPLOYEE);
         employees.add(new Employee(employeeId, name, birthDay, sex, identityCardNumber, tel, email, level, position, salary));
+        ReadAndWriteFurama.writeEmployeeToCSV(employees, PATH_FILE_EMPLOYEE, true);
         System.out.println("Bạn đã thêm thành công nhân viên: " + name);
     }
 
     @Override
     public void display() {
+        List<Employee> employees = ReadAndWriteFurama.readEmployeeToCSV(PATH_FILE_EMPLOYEE);
         if (employees.isEmpty()) {
             System.out.println("Chưa có dữ liệu, mời bạn thêm vào.");
         } else {
@@ -125,6 +128,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void editById(String id) {
+        List<Employee> employees = ReadAndWriteFurama.readEmployeeToCSV(PATH_FILE_EMPLOYEE);
         for (int i = 0; i < employees.size(); i++) {
             if(employees.get(i).getPersonId().equalsIgnoreCase(id)) {
                 System.out.println(employees.get(i));
@@ -230,6 +234,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 }
                 System.out.println("Thông tin đã được cập nhật");
                 System.out.println(employees.get(i));
+                ReadAndWriteFurama.writeEmployeeToCSV(employees, PATH_FILE_EMPLOYEE, false);
                 return;
             }
         }

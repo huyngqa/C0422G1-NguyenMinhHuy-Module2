@@ -36,12 +36,17 @@ public class Customer extends Person {
         this.address = address;
     }
 
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + typeCustomer + "," + address;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
                 super.toString() +
                 "Loại khách: " + typeCustomer + "\n" +
                 "Địa chỉ: " + address +
-                '}';
+                '}' + "\n" +
+                "-----------------------------------";
     }
 }
