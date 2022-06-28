@@ -1,6 +1,8 @@
-package ss17_binaryfile_serialization.excercise.product;
+package ss17_binaryfile_serialization.excercise.product.model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String productId;
     private String productName;
     private String producer;
