@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
         String customerId = scanner.nextLine();
         System.out.print("Nhập tên khách hàng: ");
         String name = scanner.nextLine();
-        LocalDate birthDay = null;
+        LocalDate birthDay;
         while (true) {
             try {
                 System.out.print("Nhập ngày tháng năm sinh theo định dạng YYYY-MM-DD: ");
@@ -30,8 +30,28 @@ public class CustomerServiceImpl implements CustomerService {
                 System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
             }
         }
-        System.out.print("Nhập giới tính: ");
-        String sex = scanner.nextLine();
+        String sex = "";
+        do {
+            System.out.println("Chọn giới tính\n" +
+                    "1. Nam\n" +
+                    "2. Nữ\n" +
+                    "3. LGBTS");
+            System.out.print("Mời bạn chọn: ");
+            String choose = scanner.nextLine();
+            switch (choose) {
+                case "1":
+                    sex = "nam";
+                    break;
+                case "2":
+                    sex = "nữ";
+                    break;
+                case "3":
+                    sex = "lgbts";
+                    break;
+                default:
+                    System.out.println("Bạn chọn chưa đúng! Vui lòng chọn lại");
+            }
+        } while (sex.equals(""));
         System.out.print("Nhập số CMND: ");
         String identityCardNumber = scanner.nextLine();
         System.out.print("Nhập số điện thoại: ");
@@ -39,14 +59,15 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.print("Nhập số email: ");
         String email = scanner.nextLine();
         String typeCustomer = "";
-        String choose = "";
+        String choose;
         do {
             System.out.println("Chọn loại khách\n" +
                     "1. Diamond.\n" +
                     "2. Platinum.\n" +
                     "3. Gold.\n" +
                     "4. Silver.\n" +
-                    "5. Member.\n");
+                    "5. Member.");
+            System.out.print("Mời bạn chọn: ");
             choose = scanner.nextLine();
             switch (choose) {
                 case "1":
@@ -107,8 +128,30 @@ public class CustomerServiceImpl implements CustomerService {
                         System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
                     }
                 }
-                System.out.print("Chỉnh sửa giới tính: ");
-                customers.get(i).setSex(scanner.nextLine());
+                boolean temp = false;
+                do {
+                    System.out.println("Chỉnh sửa giới tính!");
+                    System.out.println("Chọn giới tính\n" +
+                            "1. Nam\n" +
+                            "2. Nữ\n" +
+                            "3. LGBTS");
+                    System.out.print("Mời bạn chọn: ");
+                    String choose = scanner.nextLine();
+                    switch (choose) {
+                        case "1":
+                            customers.get(i).setSex("nam");
+                            break;
+                        case "2":
+                            customers.get(i).setSex("nữ");
+                            break;
+                        case "3":
+                            customers.get(i).setSex("lgbts");
+                            break;
+                        default:
+                            System.out.println("Bạn chọn chưa đúng! Vui lòng chọn lại");
+                            temp = true;
+                    }
+                } while (temp);
                 System.out.print("Chỉnh sửa số CMND: ");
                 customers.get(i).setIdentityCardNumber(scanner.nextLine());
                 System.out.print("Chỉnh sửa số điện thoại: ");
@@ -117,38 +160,35 @@ public class CustomerServiceImpl implements CustomerService {
                 customers.get(i).setEmail(scanner.nextLine());
                 System.out.println("Chỉnh sửa loại khách");
                 String choose = "";
-                boolean temp = true;
+                temp = false;
                 do {
                     System.out.println("Chọn loại khách\n" +
                             "1. Diamond.\n" +
                             "2. Platinum.\n" +
                             "3. Gold.\n" +
                             "4. Silver.\n" +
-                            "5. Member.\n");
+                            "5. Member.");
+                    System.out.print("Mời bạn chọn: ");
                     choose = scanner.nextLine();
                     switch (choose) {
                         case "1":
                             customers.get(i).setTypeCustomer("Diamond");
-                            temp = false;
                             break;
                         case "2":
                             customers.get(i).setTypeCustomer("Platinum");
-                            temp = false;
                             break;
                         case "3":
                             customers.get(i).setTypeCustomer("Gold");
-                            temp = false;
                             break;
                         case "4":
                             customers.get(i).setTypeCustomer("Silver");
-                            temp = false;
                             break;
                         case "5":
                             customers.get(i).setTypeCustomer("Member");
-                            temp = false;
                             break;
                         default:
                             System.out.println("Bạn chọn không đúng thông tin, mời bạn chọn lại");
+                            temp = true;
                     }
                 } while (temp);
                 System.out.print("Chỉnh sửa địa chỉ khách hàng: ");

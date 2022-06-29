@@ -20,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         String employeeId = scanner.nextLine();
         System.out.print("Nhập tên nhân viên: ");
         String name = scanner.nextLine();
-        LocalDate birthDay = null;
+        LocalDate birthDay;
         while (true) {
             try {
                 System.out.print("Nhập ngày tháng năm sinh theo định dạng YYYY-MM-DD: ");
@@ -30,8 +30,28 @@ public class EmployeeServiceImpl implements EmployeeService {
                 System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
             }
         }
-        System.out.print("Nhập giới tính: ");
-        String sex = scanner.nextLine();
+        String sex = "";
+        do {
+            System.out.println("Chọn giới tính\n" +
+                    "1. Nam\n" +
+                    "2. Nữ\n" +
+                    "3. LGBTS");
+            System.out.print("Mời bạn chọn: ");
+            String choose = scanner.nextLine();
+            switch (choose) {
+                case "1":
+                    sex = "nam";
+                    break;
+                case "2":
+                    sex = "nữ";
+                    break;
+                case "3":
+                    sex = "lgbts";
+                    break;
+                default:
+                    System.out.println("Bạn chọn chưa đúng! Vui lòng chọn lại");
+            }
+        } while (sex.equals(""));
         System.out.print("Nhập số CMND: ");
         String identityCardNumber = scanner.nextLine();
         System.out.print("Nhập số điện thoại: ");
@@ -39,13 +59,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         System.out.print("Nhập số email: ");
         String email = scanner.nextLine();
         String level = "";
-        String choose = "";
+        String choose;
         do {
             System.out.println("Nhập trình độ\n" +
                     "1. Trung cấp.\n" +
                     "2. Cao đẳng.\n" +
                     "3. Đại học.\n" +
-                    "4. Sau đại học.\n");
+                    "4. Sau đại học.");
+            System.out.print("Mời bạn chọn: ");
             choose = scanner.nextLine();
             switch (choose) {
                 case "1":
@@ -65,15 +86,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         } while (level.equals(""));
         String position = "";
-        choose = "";
         do {
             System.out.println("Nhập vị trí công việc\n" +
                     "1. Lễ tân.\n" +
                     "2. Phục vụ.\n" +
                     "3. Chuyên viên.\n" +
-                    "4. Gián sát.\n" +
+                    "4. Giám sát.\n" +
                     "5. Quản lý.\n" +
-                    "6. Giám đốc.\n");
+                    "6. Giám đốc.");
+            System.out.print("Mời bạn chọn: ");
             choose = scanner.nextLine();
             switch (choose) {
                 case "1":
@@ -86,7 +107,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     position = "Chuyên viên";
                     break;
                 case "4":
-                    position = "Gián sát";
+                    position = "Giám sát";
                     break;
                 case "5":
                     position = "Quản lý";
@@ -108,7 +129,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 System.err.println("Vui lòng nhập số!");
             }
         }
-        List<Employee> employees = ReadAndWriteFurama.readEmployeeToCSV(PATH_FILE_EMPLOYEE);
+        List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(employeeId, name, birthDay, sex, identityCardNumber, tel, email, level, position, salary));
         ReadAndWriteFurama.writeEmployeeToCSV(employees, PATH_FILE_EMPLOYEE, true);
         System.out.println("Bạn đã thêm thành công nhân viên: " + name);
@@ -145,8 +166,30 @@ public class EmployeeServiceImpl implements EmployeeService {
                         System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
                     }
                 }
-                System.out.print("Chỉnh sửa giới tính: ");
-                employees.get(i).setSex(scanner.nextLine());
+                boolean temp = false;
+                do {
+                    System.out.println("Chỉnh sửa giới tính!");
+                    System.out.println("Chọn giới tính\n" +
+                            "1. Nam\n" +
+                            "2. Nữ\n" +
+                            "3. LGBTS");
+                    System.out.print("Mời bạn chọn: ");
+                    String choose = scanner.nextLine();
+                    switch (choose) {
+                        case "1":
+                            employees.get(i).setSex("nam");
+                            break;
+                        case "2":
+                            employees.get(i).setSex("nữ");
+                            break;
+                        case "3":
+                            employees.get(i).setSex("lgbts");
+                            break;
+                        default:
+                            System.out.println("Bạn chọn chưa đúng! Vui lòng chọn lại");
+                            temp = true;
+                    }
+                } while (temp);
                 System.out.print("Chỉnh sửa số CMND: ");
                 employees.get(i).setIdentityCardNumber(scanner.nextLine());
                 System.out.print("Chỉnh sửa số điện thoại: ");
@@ -154,7 +197,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 System.out.print("Chỉnh sửa email: ");
                 employees.get(i).setEmail(scanner.nextLine());
                 System.out.println("Chỉnh sửa trình độ");
-                boolean temp = true;
+                temp = false;
                 do {
                     System.out.println("Chọn trình độ\n" +
                             "1. Trung cấp.\n" +
@@ -165,59 +208,50 @@ public class EmployeeServiceImpl implements EmployeeService {
                     switch (choose) {
                         case "1":
                             employees.get(i).setLevel("Trung cấp");
-                            temp = false;
                             break;
                         case "2":
                             employees.get(i).setLevel("Cao đẳng");
-                            temp = false;
                             break;
                         case "3":
                             employees.get(i).setLevel("Đại học");
-                            temp = false;
                             break;
                         case "4":
                             employees.get(i).setLevel("Sau đại học");
-                            temp = false;
                             break;
                         default:
                             System.out.println("Bạn chọn không đúng thông tin, mời bạn chọn lại");
+                            temp = true;
                     }
                 } while (temp);
                 System.out.println("Chỉnh sửa vị trí công việc");
-                temp = true;
+                temp = false;
                 do {
                     System.out.println("Chọn vị trí công việc\n" +
                             "1. Lễ tân.\n" +
                             "2. Phục vụ.\n" +
                             "3. Chuyên viên.\n" +
-                            "4. Gián sát.\n" +
+                            "4. Giám sát.\n" +
                             "5. Quản lý.\n" +
                             "6. Giám đốc: ");
                     String choose = scanner.nextLine();
                     switch (choose) {
                         case "1":
                             employees.get(i).setPosition("Lễ tân");
-                            temp = false;
                             break;
                         case "2":
                             employees.get(i).setPosition("Phục vụ");
-                            temp = false;
                             break;
                         case "3":
                             employees.get(i).setPosition("Chuyên viên");
-                            temp = false;
                             break;
                         case "4":
                             employees.get(i).setPosition("Giám sát");
-                            temp = false;
                             break;
                         case "5":
                             employees.get(i).setPosition("Quản lí");
-                            temp = false;
                             break;
                         case "6":
                             employees.get(i).setPosition("Giám đốc");
-                            temp = false;
                             break;
                         default:
                             System.out.println("Bạn chọn không đúng thông tin, mời bạn chọn lại");
