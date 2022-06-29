@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 public class CrawlNewFeed {
     public static void main(String[] args) {
         try {
-            URL url = new URL("http://dantri.com.vn/the-gioi.htm");
+            URL url = new URL("https://dantri.com.vn/the-gioi.htm");
             Scanner scanner = new Scanner(new InputStreamReader(url.openStream()));
-
+            scanner.useDelimiter("\\Z");
             String content = scanner.next();
             scanner.close();
             Pattern pattern = Pattern.compile("article-title\">(.*?)</a>");
