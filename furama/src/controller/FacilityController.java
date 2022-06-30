@@ -1,10 +1,13 @@
 package controller;
 
+import service.FacilityService;
+import service.impl.FacilityServiceImpl;
+
 import java.util.Scanner;
 
 public class FacilityController {
     private static Scanner scanner = new Scanner(System.in);
-
+    static FacilityService facilityService = new FacilityServiceImpl();
     public static void displayFacilityMenu() {
         String choose = "";
         do {
@@ -18,8 +21,12 @@ public class FacilityController {
             System.out.println();
             switch (choose) {
                 case "1":
+                    System.out.println("DANH SÁCH DỊCH VỤ");
+                    facilityService.display();
                     break;
                 case "2":
+                    System.out.println("Thêm mới dịch vụ");
+                    facilityService.add();
                     break;
                 case "3":
                     break;

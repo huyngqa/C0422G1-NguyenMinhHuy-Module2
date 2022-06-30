@@ -66,6 +66,7 @@ public class Contract {
                 "Số tiền cọc trước: " + depositAdvance + "\n" +
                 "Tổng tiền thanh toán: " + totalPayment + "\n" +
                 "Mã khách hàng: " + customerId.getPersonId() +
-                '}';
+                "}" + "\n" +
+                "---------------------------------------------";
     }
 }

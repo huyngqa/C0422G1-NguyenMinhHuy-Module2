@@ -1,7 +1,5 @@
 package model;
 
-import java.time.LocalDateTime;
-
 public class House extends Facility {
     private String roomStandard;
     private byte numOfFloor;
@@ -14,8 +12,8 @@ public class House extends Facility {
         this.numOfFloor = numOfFloor;
     }
 
-    public House(String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType, String roomStandard, byte numOfFloor) {
-        super(nameService, usableArea, rentalCosts, maximumNumOfPeople, rentalType);
+    public House(String facilityId, String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType, String roomStandard, byte numOfFloor) {
+        super(facilityId, nameService, usableArea, rentalCosts, maximumNumOfPeople, rentalType);
         this.roomStandard = roomStandard;
         this.numOfFloor = numOfFloor;
     }
@@ -36,12 +34,17 @@ public class House extends Facility {
         this.numOfFloor = numOfFloor;
     }
 
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + roomStandard + "," + numOfFloor;
+    }
+
     @Override
     public String toString() {
         return "House{" +
                 super.toString() +
                 "Tiêu chuẩn phòng: " + roomStandard + "\n" +
                 "Số tầng: " + numOfFloor +
-                '}';
+                "}" + "\n" +
+                "---------------------------------------------";
     }
 }

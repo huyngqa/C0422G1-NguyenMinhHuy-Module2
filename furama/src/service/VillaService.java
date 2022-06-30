@@ -1,4 +1,5 @@
 package service;
 
-public interface VillaService extends Service{
+public interface VillaService {
+    Object addObject();
 }

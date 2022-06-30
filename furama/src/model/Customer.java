@@ -46,7 +46,7 @@ public class Customer extends Person {
                 super.toString() +
                 "Loại khách: " + typeCustomer + "\n" +
                 "Địa chỉ: " + address +
-                '}' + "\n" +
-                "-----------------------------------";
+                "}" + "\n" +
+                "---------------------------------------------";
     }
 }

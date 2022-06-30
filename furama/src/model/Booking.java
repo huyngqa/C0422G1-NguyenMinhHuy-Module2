@@ -1,8 +1,10 @@
 package model;
 
+import common.FormatDate;
+
 import java.time.LocalDate;
 
-public class Booking {
+public class Booking implements Comparable<Booking> {
     private String bookingId;
     private LocalDate startDay;
     private LocalDate endDay;
@@ -60,14 +62,30 @@ public class Booking {
         this.nameService = nameService;
     }
 
+    public String getInformationToCSV() {
+        return bookingId + "," + startDay + "," + endDay + "," + customerId.getPersonId() + "," + nameService.getNameService();
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
                 "Mã booking" + bookingId + "\n" +
-                "Ngày bắt đầu: " + startDay + "\n" +
-                "Ngày kết thúc: " + endDay + "\n" +
+                "Ngày bắt đầu: " + FormatDate.getDateFormatted(startDay) + "\n" +
+                "Ngày kết thúc: " + FormatDate.getDateFormatted(endDay) + "\n" +
                 "Mã khách hàng: " + customerId.getPersonId() + "\n" +
                 "Tên dịch vụ: " + nameService.getNameService() +
-                '}';
+                "}" + "\n" +
+                "---------------------------------------------";
+    }
+
+    @Override
+    public int compareTo(Booking b) {
+        if(this.startDay.compareTo(b.getStartDay()) > 1) {
+            return 1;
+        } else if (this.startDay.compareTo(b.getStartDay())==0) {
+            return this.endDay.compareTo(b.getEndDay());
+        } else {
+            return -1;
+        }
     }
 }

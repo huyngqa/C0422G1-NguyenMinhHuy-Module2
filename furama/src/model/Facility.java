@@ -1,6 +1,9 @@
 package model;
 
+import java.util.Objects;
+
 public abstract class Facility {
+    private String facilityId;
     private String nameService;
     private double usableArea;
     private double rentalCosts;
@@ -10,12 +13,21 @@ public abstract class Facility {
     public Facility() {
     }
 
-    public Facility(String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType) {
+    public Facility(String facilityId, String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType) {
+        this.facilityId = facilityId;
         this.nameService = nameService;
         this.usableArea = usableArea;
         this.rentalCosts = rentalCosts;
         this.maximumNumOfPeople = maximumNumOfPeople;
         this.rentalType = rentalType;
+    }
+
+    public String getFacilityId() {
+        return facilityId;
+    }
+
+    public void setFacilityId(String facilityId) {
+        this.facilityId = facilityId;
     }
 
     public String getNameService() {
@@ -59,11 +71,29 @@ public abstract class Facility {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Facility facility = (Facility) o;
+        return nameService.equals(facility.nameService);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameService);
+    }
+
+    public String getInformationToCSV() {
+        return facilityId + "," + nameService + "," + usableArea + "," + rentalCosts + "," + maximumNumOfPeople + "," + rentalType;
+    }
+
+    @Override
     public String toString() {
-        return "Name service: " + nameService + "\n"
+        return  "Mã dịch vụ: " + nameService + "\n"
+                + "Tên dịch vụ: " + nameService + "\n"
                 + "Diện tích: " + usableArea + "\n"
                 + "Chi phí thuê: " + rentalCosts + "\n"
-                + "Số lượng người tối đa: " + rentalCosts + "\n"
-                + "Kiểu thuê: " + rentalCosts + "\n";
+                + "Số lượng người tối đa: " + maximumNumOfPeople + "\n"
+                + "Kiểu thuê: " + rentalType + "\n";
     }
 }

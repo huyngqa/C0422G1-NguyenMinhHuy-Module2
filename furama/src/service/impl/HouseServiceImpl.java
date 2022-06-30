@@ -1,17 +1,18 @@
 package service.impl;
 
 import common.CheckRegex;
-import model.Villa;
+import model.House;
+import model.Room;
 import service.VillaService;
 
 import java.util.Scanner;
 
-public class VillaServiceImpl implements VillaService {
+public class HouseServiceImpl implements VillaService {
     private Scanner scanner = new Scanner(System.in);
 
     @Override
     public Object addObject() {
-        String id = "SVVL-";
+        String id = "SVHO-";
         do {
             System.out.print("Nhập mã dịch vụ (gồm có 4 số): ");
             id += scanner.nextLine();
@@ -21,8 +22,7 @@ public class VillaServiceImpl implements VillaService {
         double usableArea;
         double rentalCosts;
         int maximumNumOfPeople;
-        double swimmingPoolArea;
-        int numOfFloor;
+        byte numOfFloor;
         while (true) {
             try {
                 System.out.print("Nhập diện tích sử dụng: ");
@@ -31,10 +31,8 @@ public class VillaServiceImpl implements VillaService {
                 rentalCosts = Double.parseDouble(scanner.nextLine());
                 System.out.print("Số người tối đa: ");
                 maximumNumOfPeople = Integer.parseInt(scanner.nextLine());
-                System.out.print("Diện tích hồ bơi: ");
-                swimmingPoolArea = Double.parseDouble(scanner.nextLine());
                 System.out.print("Số tầng: ");
-                numOfFloor = Integer.parseInt(scanner.nextLine());
+                numOfFloor = Byte.parseByte(scanner.nextLine());
                 break;
             } catch (NumberFormatException exception) {
                 System.err.println("Vui lòng nhập số!");
@@ -68,8 +66,7 @@ public class VillaServiceImpl implements VillaService {
         } while (rentalType.equals(""));
         System.out.print("Tiêu chuẩn phòng: ");
         String roomStandard = scanner.nextLine();
-        Villa villa = new Villa(id, name, usableArea, rentalCosts, maximumNumOfPeople, rentalType, roomStandard, swimmingPoolArea, numOfFloor);
-        System.out.println("Bạn đã thêm mới dịch vụ thành công");
-        return villa;
+        House house = new House(id, name, usableArea, rentalCosts, maximumNumOfPeople, rentalType, roomStandard, numOfFloor);
+        return house;
     }
 }

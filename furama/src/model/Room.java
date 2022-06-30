@@ -12,8 +12,8 @@ public class Room extends Facility {
         this.freeService = freeService;
     }
 
-    public Room(String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType, String freeService) {
-        super(nameService, usableArea, rentalCosts, maximumNumOfPeople, rentalType);
+    public Room(String facilityId, String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType, String freeService) {
+        super(facilityId, nameService, usableArea, rentalCosts, maximumNumOfPeople, rentalType);
         this.freeService = freeService;
     }
 
@@ -25,11 +25,16 @@ public class Room extends Facility {
         this.freeService = freeService;
     }
 
+    public String getInformationToCSV() {
+        return super.getInformationToCSV() + "," + freeService;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
                 super.toString() +
                 "Dịch vụ miễn phí đi kèm: " + freeService +
-                '}';
+                "}" + "\n" +
+                "---------------------------------------------";
     }
 }
