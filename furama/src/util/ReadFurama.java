@@ -89,7 +89,7 @@ public class ReadFurama {
                     customer = customers.get(i);
             }
             for (Facility f : set) {
-                if (f.getFacilityId().equals(arr[4]))
+                if (f.getNameService().equals(arr[4]))
                     facility = f;
             }
             bookings.add(new Booking(arr[0], LocalDate.parse(arr[1]), LocalDate.parse(arr[2]), customer, facility));

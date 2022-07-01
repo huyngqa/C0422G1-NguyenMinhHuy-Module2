@@ -89,7 +89,7 @@ public abstract class Facility {
 
     @Override
     public String toString() {
-        return  "Mã dịch vụ: " + nameService + "\n"
+        return  "Mã dịch vụ: " + facilityId + "\n"
                 + "Tên dịch vụ: " + nameService + "\n"
                 + "Diện tích: " + usableArea + "\n"
                 + "Chi phí thuê: " + rentalCosts + "\n"

@@ -106,6 +106,10 @@ public class CustomerServiceImpl implements CustomerService, ObjectService {
     public Object getObject() {
         List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         System.out.println("Danh sách khách hàng");
+        if(customers.isEmpty()) {
+            System.out.println("Chưa có thông tin, mời bạn thêm vào!");
+            add();
+        }
         for (Customer c : customers) {
             System.out.println("ID: " + c.getPersonId() + "," + "tên KH: " + c.getName() + ", " + " sđt: " + c.getTel() + ", " + "email: " + c.getEmail());
         }

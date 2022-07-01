@@ -12,6 +12,7 @@ import util.WriteFurama;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void add() {
         Set<Booking> bookings = ReadFurama.readBookingToCSV(PATH_FILE_BOOKING);
-        List<Booking> list = null;
+        List<Booking> list = new ArrayList<>();
         list.addAll(bookings);
         String idBooking = "BK-" + Random.getRandom();
         for (int i = 0; i < list.size(); i++) {
@@ -36,7 +37,6 @@ public class BookingServiceImpl implements BookingService {
                 i = 0;
             }
         }
-        System.out.print("Nhập ngày booking: ");
         LocalDate startDay;
         while (true) {
             try {
@@ -58,12 +58,10 @@ public class BookingServiceImpl implements BookingService {
             }
         }
         Customer customer;
-        System.out.println("Chọn mã khách hàng");
         do {
             customer = (Customer) customerService.getObject();
         } while (customer == null);
         Facility facility;
-        System.out.println("Chọn tên dịch vụ");
         do {
             facility = (Facility) facilityService.getObject();
         } while (facility == null);

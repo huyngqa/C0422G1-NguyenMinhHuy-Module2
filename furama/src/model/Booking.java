@@ -64,7 +64,7 @@ public class Booking implements Comparable<Booking> {
     }
 
     public String getInformationToCSV() {
-        return bookingId + "," + startDay + "," + endDay + "," + customerId.getPersonId() + "," + nameService.getNameService();
+        return this.bookingId + "," + this.startDay + "," + this.endDay + "," + this.customerId.getPersonId() + "," + this.nameService.getNameService();
     }
 
     @Override
