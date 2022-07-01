@@ -7,6 +7,7 @@ import util.ReadFurama;
 import util.WriteFurama;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         LocalDate birthDay;
         while (true) {
             try {
-                System.out.print("Nhập ngày tháng năm sinh theo định dạng YYYY-MM-DD: ");
-                birthDay = LocalDate.parse(scanner.nextLine());
+                System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
+                birthDay =  LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 break;
             } catch (DateTimeParseException e) {
-                System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
+                System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
             }
         }
         String sex = TypeInformation.getTypeSex();
@@ -81,11 +82,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 System.out.println("Chỉnh sửa ngày sinh");
                 while (true) {
                     try {
-                        System.out.print("Nhập ngày tháng năm sinh theo định dạng YYYY-MM-DD: ");
-                        employees.get(i).setDateOfBirth(LocalDate.parse(scanner.nextLine()));
+                        System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
+                        employees.get(i).setDateOfBirth(LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
                         break;
                     } catch (DateTimeParseException e) {
-                        System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
+                        System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
                     }
                 }
                 boolean temp = false;

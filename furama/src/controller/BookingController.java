@@ -1,10 +1,13 @@
 package controller;
 
+import service.BookingService;
+import service.impl.BookingServiceImpl;
+
 import java.util.Scanner;
 
 public class BookingController {
     private static Scanner scanner = new Scanner(System.in);
-
+    private static BookingService bookingService = new BookingServiceImpl();
     public static void displayBookingMenu() {
         String choose = "";
         do {
@@ -20,8 +23,11 @@ public class BookingController {
             System.out.println();
             switch (choose) {
                 case "1":
+                    bookingService.display();
                     break;
                 case "2":
+                    System.out.println("Tạo mới booking!");
+                    bookingService.add();
                     break;
                 case "3":
                     break;

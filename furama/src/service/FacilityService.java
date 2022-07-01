@@ -1,4 +1,8 @@
 package service;
 
-public interface FacilityService extends Service{
+import model.Facility;
+
+public interface FacilityService {
+    Object addObject();
+    void display();
 }

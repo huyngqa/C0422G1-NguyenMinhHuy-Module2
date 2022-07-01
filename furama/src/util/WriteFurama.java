@@ -37,16 +37,16 @@ public class WriteFurama {
 
     public static void writeCustomerToCSV(List<Customer> customers, String pathFile, boolean append) {
         List<String> strings = new ArrayList<>();
-        for (int i = 0; i < customers.size(); i++) {
-            strings.add(customers.get(i).getInformationToCSV());
+        for (Customer customer : customers) {
+            strings.add(customer.getInformationToCSV());
         }
         writeObjectToCSV(strings, pathFile, append);
     }
 
     public static void writeEmployeeToCSV(List<Employee> employees, String pathFile, boolean append) {
         List<String> strings = new ArrayList<>();
-        for (int i = 0; i < employees.size(); i++) {
-            strings.add(employees.get(i).getInformationToCSV());
+        for (Employee employee : employees) {
+            strings.add(employee.getInformationToCSV());
         }
         writeObjectToCSV(strings, pathFile, append);
     }
@@ -60,7 +60,7 @@ public class WriteFurama {
         writeObjectToCSV(strings, pathFile, append);
     }
 
-    public static void writeBookingToCSV(List<Booking> bookings, String pathFile, boolean append) {
+    public static void writeBookingToCSV(Set<Booking> bookings, String pathFile, boolean append) {
         List<String> strings = new ArrayList<>();
         for (Booking booking : bookings) {
             strings.add(booking.getInformationToCSV());

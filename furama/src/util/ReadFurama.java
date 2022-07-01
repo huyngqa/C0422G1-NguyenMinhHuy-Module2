@@ -60,13 +60,11 @@ public class ReadFurama {
         Map<Facility, Integer> facilityMap = new LinkedHashMap<>();
         List<String> strings = readObjectToCSV(pathFile);
         String[] arr;
-        String name = "";
         for (String str : strings) {
             arr = str.split(",");
-            name = arr[0].substring(0, 4);
-            if (name.contains("SVVL")) {
+            if (arr[0].contains("VL")) {
                 facilityMap.put(new Villa(arr[0], arr[1], Double.parseDouble(arr[2]), Double.parseDouble(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6], Double.parseDouble(arr[7]), Integer.parseInt(arr[8])), Integer.parseInt(arr[9]));
-            } else if (name.contains("SVHO")) {
+            } else if (arr[0].contains("HO")) {
                 facilityMap.put(new House(arr[0], arr[1], Double.parseDouble(arr[2]), Double.parseDouble(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6], Byte.parseByte(arr[7])), Integer.parseInt(arr[8]));
             } else {
                 facilityMap.put(new Room(arr[0], arr[1], Double.parseDouble(arr[2]), Double.parseDouble(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6]), Integer.parseInt(arr[7]));

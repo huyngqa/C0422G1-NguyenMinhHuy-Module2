@@ -3,16 +3,18 @@ package service.impl;
 import common.TypeInformation;
 import model.Customer;
 import service.CustomerService;
+import service.ObjectService;
 import util.ReadFurama;
 import util.WriteFurama;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, ObjectService {
     private Scanner scanner = new Scanner(System.in);
     private final String PATH_FILE_CUSTOMER = "furama/src/data/customer.csv";
 
@@ -25,11 +27,11 @@ public class CustomerServiceImpl implements CustomerService {
         LocalDate birthDay;
         while (true) {
             try {
-                System.out.print("Nhập ngày tháng năm sinh theo định dạng YYYY-MM-DD: ");
-                birthDay = LocalDate.parse(scanner.nextLine());
+                System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
+                birthDay = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 break;
             } catch (DateTimeParseException e) {
-                System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
+                System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
             }
         }
         String sex = TypeInformation.getTypeSex();
@@ -72,11 +74,11 @@ public class CustomerServiceImpl implements CustomerService {
                 System.out.println("Chỉnh sửa ngày sinh");
                 while (true) {
                     try {
-                        System.out.print("Nhập ngày tháng năm sinh theo định dạng YYYY-MM-DD: ");
-                        customers.get(i).setDateOfBirth(LocalDate.parse(scanner.nextLine()));
+                        System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
+                        customers.get(i).setDateOfBirth(LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
                         break;
                     } catch (DateTimeParseException e) {
-                        System.err.println("Định dạng ngày tháng năm 'YYYY-MM-DD'!");
+                        System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
                     }
                 }
                 System.out.println("Chỉnh sửa giới tính");
@@ -100,4 +102,20 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("Mã khách hàng bạn nhập không tồn tại.");
     }
 
+    @Override
+    public Object getObject() {
+        List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        System.out.println("Danh sách khách hàng");
+        for (Customer c : customers) {
+            System.out.println("ID: " + c.getPersonId() + "," + "tên KH: " + c.getName() + ", " + " sđt: " + c.getTel() + ", " + "email: " + c.getEmail());
+        }
+        System.out.print("Chọn mã khách hàng: ");
+        String id = scanner.nextLine();
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.get(i).getPersonId().equalsIgnoreCase(id)) {
+                return customers.get(i);
+            }
+        }
+        return null;
+    }
 }

@@ -1,2 +1,5 @@
-package service.impl;public interface ObjectService {
+package service;
+
+public interface ObjectService {
+    Object getObject();
 }

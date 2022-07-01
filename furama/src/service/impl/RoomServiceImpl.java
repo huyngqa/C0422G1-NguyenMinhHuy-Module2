@@ -1,23 +1,35 @@
 package service.impl;
 
 import common.CheckRegex;
+import model.Facility;
 import model.Room;
-import service.VillaService;
+import service.FacilityService;
+import util.ReadFurama;
+import util.WriteFurama;
 
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
-public class RoomServiceImpl implements VillaService {
+public class RoomServiceImpl implements FacilityService {
     private Scanner scanner = new Scanner(System.in);
-
+    private final String PATH_FILE_FACILITY = "furama/src/data/facility.csv";
     @Override
     public Object addObject() {
+        Map<Facility, Integer> facilityMap = ReadFurama.readFacilityToCSV(PATH_FILE_FACILITY);
+        Set<Facility> set = facilityMap.keySet();
+        System.out.print("Nhập tên dịch vụ: ");
+        String name = scanner.nextLine();
+        for (Facility facility : set) {
+            if (facility.getNameService().equalsIgnoreCase(name))
+                System.out.println("Dịch vụ này đã có!");
+            return facility;
+        }
         String id = "SVRO-";
         do {
             System.out.print("Nhập mã dịch vụ (gồm có 4 số): ");
             id += scanner.nextLine();
         } while (!CheckRegex.checkRegexFacilityId(id));
-        System.out.print("Nhập tên dịch vụ: ");
-        String name = scanner.nextLine();
         double usableArea;
         double rentalCosts;
         int maximumNumOfPeople;
@@ -63,6 +75,14 @@ public class RoomServiceImpl implements VillaService {
         System.out.print("Dịch vụ miễn phí đi kèm: ");
         String freeService = scanner.nextLine();
         Room room = new Room(id, name, usableArea, rentalCosts, maximumNumOfPeople, rentalType, freeService);
+        facilityMap.put(room, 0);
+        WriteFurama.writeFacilityToCSV(facilityMap, PATH_FILE_FACILITY, false);
+        System.out.println("Bạn đã thêm mới dịch vụ thành công");
         return room;
+    }
+
+    @Override
+    public void display() {
+
     }
 }
