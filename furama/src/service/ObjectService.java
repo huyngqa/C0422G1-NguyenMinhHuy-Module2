@@ -1,5 +1,5 @@
 package service;
 
 public interface ObjectService {
-    Object getObject();
+    Object addObject();
 }

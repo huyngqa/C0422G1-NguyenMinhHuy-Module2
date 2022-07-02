@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class TypeInformation {
     private static Scanner scanner = new Scanner(System.in);
+
     public static String getTypeSex() {
         String sex = "";
         do {
@@ -29,6 +30,7 @@ public class TypeInformation {
         } while (sex.equals(""));
         return sex;
     }
+
     public static String getTypeCustomer() {
         String typeCustomer = "";
         String choose;
@@ -63,6 +65,7 @@ public class TypeInformation {
         } while (typeCustomer.equals(""));
         return typeCustomer;
     }
+
     public static String getTypeLevel() {
         String level = "";
         String choose;
@@ -93,6 +96,7 @@ public class TypeInformation {
         } while (level.equals(""));
         return level;
     }
+
     public static String getTypePosition() {
         String position = "";
         String choose = "";
@@ -130,5 +134,35 @@ public class TypeInformation {
             }
         } while (position.equals(""));
         return position;
+    }
+
+    public static String getRentalType() {
+        String rentalType = "";
+        do {
+            System.out.println("Chọn kiểu thuê\n" +
+                    "1. Thuê theo năm\n" +
+                    "2. Thuê theo tháng\n" +
+                    "3. Thuê theo ngày\n" +
+                    "4. Thuê theo giờ.");
+            System.out.print("Mời bạn chọn: ");
+            String choose = scanner.nextLine();
+            switch (choose) {
+                case "1":
+                    rentalType = "Thuê theo năm";
+                    break;
+                case "2":
+                    rentalType = "Thuê theo tháng";
+                    break;
+                case "3":
+                    rentalType = "Thuê theo ngày";
+                    break;
+                case "4":
+                    rentalType = "Thuê theo giờ";
+                    break;
+                default:
+                    System.out.println("Bạn chọn lại kiểu thuê!");
+            }
+        } while (rentalType.equals(""));
+        return rentalType;
     }
 }

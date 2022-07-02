@@ -1,6 +1,9 @@
 package service.impl;
 
+import common.CheckException;
+import common.CheckRegex;
 import common.TypeInformation;
+import common.UserException;
 import model.Employee;
 import service.EmployeeService;
 import util.ReadFurama;
@@ -21,16 +24,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void add() {
         System.out.print("Nhập mã nhân viên: ");
         String employeeId = scanner.nextLine();
-        System.out.print("Nhập tên nhân viên: ");
-        String name = scanner.nextLine();
+        String name;
+        do {
+            System.out.print("Nhập tên nhân viên: ");
+            name = scanner.nextLine();
+            if(!CheckRegex.checkRegexPersonName(name)) {
+                System.err.println("Tên phải viết hoa chữ cái đầu, không được có kí tự số và kí tự đặc biệt!");
+            }
+        }while (!CheckRegex.checkRegexPersonName(name));
         LocalDate birthDay;
         while (true) {
             try {
                 System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
-                birthDay =  LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                birthDay = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                CheckException.checkDateOfBirth(birthDay);
                 break;
             } catch (DateTimeParseException e) {
                 System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
+            } catch (UserException userException) {
+                System.err.println(userException.getMessage());
             }
         }
         String sex = TypeInformation.getTypeSex();
@@ -78,18 +90,32 @@ public class EmployeeServiceImpl implements EmployeeService {
                 System.out.println(employees.get(i));
                 System.out.println("Đây là thông tin nhân viên bạn muốn chỉnh sửa.");
                 System.out.print("Chỉnh sửa tên nhân viên: ");
-                employees.get(i).setName(scanner.nextLine());
+                System.out.println("Chỉnh sửa tên");
+                String name;
+                do {
+                    System.out.print("Nhập tên nhân viên: ");
+                    name = scanner.nextLine();
+                    if(!CheckRegex.checkRegexPersonName(name)) {
+                        System.err.println("Tên phải viết hoa chữ cái đầu, không được có kí tự số và kí tự đặc biệt!");
+                        continue;
+                    }
+                    employees.get(i).setName(name);
+                }while (!CheckRegex.checkRegexPersonName(name));
                 System.out.println("Chỉnh sửa ngày sinh");
+                LocalDate dateOfBirth;
                 while (true) {
                     try {
                         System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
-                        employees.get(i).setDateOfBirth(LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                        dateOfBirth = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                        CheckException.checkDateOfBirth(dateOfBirth);
+                        employees.get(i).setDateOfBirth(dateOfBirth);
                         break;
                     } catch (DateTimeParseException e) {
                         System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
+                    } catch (UserException userException) {
+                        System.err.println(userException.getMessage());
                     }
                 }
-                boolean temp = false;
                 employees.get(i).setSex(TypeInformation.getTypeSex());
                 System.out.print("Chỉnh sửa số CMND: ");
                 employees.get(i).setIdentityCardNumber(scanner.nextLine());

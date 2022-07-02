@@ -1,9 +1,11 @@
 package service.impl;
 
+import common.CheckException;
+import common.CheckRegex;
 import common.TypeInformation;
+import common.UserException;
 import model.Customer;
 import service.CustomerService;
-import service.ObjectService;
 import util.ReadFurama;
 import util.WriteFurama;
 
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CustomerServiceImpl implements CustomerService, ObjectService {
+public class CustomerServiceImpl implements CustomerService{
     private Scanner scanner = new Scanner(System.in);
     private final String PATH_FILE_CUSTOMER = "furama/src/data/customer.csv";
 
@@ -22,16 +24,25 @@ public class CustomerServiceImpl implements CustomerService, ObjectService {
     public void add() {
         System.out.print("Nhập mã khách hàng: ");
         String customerId = scanner.nextLine();
-        System.out.print("Nhập tên khách hàng: ");
-        String name = scanner.nextLine();
+        String name;
+        do {
+            System.out.print("Nhập tên khách hàng: ");
+            name = scanner.nextLine();
+            if(!CheckRegex.checkRegexPersonName(name)) {
+                System.err.println("Tên phải viết hoa chữ cái đầu, không được có kí tự số và kí tự đặc biệt!");
+            }
+        }while (!CheckRegex.checkRegexPersonName(name));
         LocalDate birthDay;
         while (true) {
             try {
                 System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
                 birthDay = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                CheckException.checkDateOfBirth(birthDay);
                 break;
             } catch (DateTimeParseException e) {
                 System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
+            } catch (UserException userException) {
+                System.err.println(userException.getMessage());
             }
         }
         String sex = TypeInformation.getTypeSex();
@@ -69,16 +80,30 @@ public class CustomerServiceImpl implements CustomerService, ObjectService {
             if (customers.get(i).getPersonId().equalsIgnoreCase(id)) {
                 System.out.println(customers.get(i));
                 System.out.println("Đây là thông tin khách hàng bạn muốn chỉnh sửa.");
-                System.out.print("Chỉnh sửa tên khách hàng: ");
-                customers.get(i).setName(scanner.nextLine());
+                System.out.println("Chỉnh sửa tên");
+                String name;
+                do {
+                    System.out.print("Nhập tên khách hàng: ");
+                    name = scanner.nextLine();
+                    if(!CheckRegex.checkRegexPersonName(name)) {
+                        System.err.println("Tên phải viết hoa chữ cái đầu, không được có kí tự số và kí tự đặc biệt!");
+                        continue;
+                    }
+                    customers.get(i).setName(name);
+                }while (!CheckRegex.checkRegexPersonName(name));
                 System.out.println("Chỉnh sửa ngày sinh");
+                LocalDate dateOfBirth;
                 while (true) {
                     try {
                         System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
-                        customers.get(i).setDateOfBirth(LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                        dateOfBirth = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                        CheckException.checkDateOfBirth(dateOfBirth);
+                        customers.get(i).setDateOfBirth(dateOfBirth);
                         break;
                     } catch (DateTimeParseException e) {
                         System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
+                    } catch (UserException userException) {
+                        System.err.println(userException.getMessage());
                     }
                 }
                 System.out.println("Chỉnh sửa giới tính");
@@ -103,15 +128,11 @@ public class CustomerServiceImpl implements CustomerService, ObjectService {
     }
 
     @Override
-    public Object getObject() {
+    public Customer getCustomerById() {
         List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         System.out.println("Danh sách khách hàng");
-        if(customers.isEmpty()) {
-            System.out.println("Chưa có thông tin, mời bạn thêm vào!");
-            add();
-        }
         for (Customer c : customers) {
-            System.out.println("ID: " + c.getPersonId() + "," + "tên KH: " + c.getName() + ", " + " sđt: " + c.getTel() + ", " + "email: " + c.getEmail());
+            System.out.println("ID: " + c.getPersonId() + "," + "tên KH: " + c.getName() + ", " + "sđt: " + c.getTel() + ", " + "email: " + c.getEmail());
         }
         System.out.print("Chọn mã khách hàng: ");
         String id = scanner.nextLine();

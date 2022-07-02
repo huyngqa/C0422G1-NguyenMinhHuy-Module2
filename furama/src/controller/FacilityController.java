@@ -1,6 +1,7 @@
 package controller;
 
 import service.FacilityService;
+import service.ObjectService;
 import service.impl.FacilityServiceImpl;
 import service.impl.HouseServiceImpl;
 import service.impl.RoomServiceImpl;
@@ -11,9 +12,10 @@ import java.util.Scanner;
 public class FacilityController {
     private static Scanner scanner = new Scanner(System.in);
     private static FacilityService facilityService = new FacilityServiceImpl();
-    private static FacilityService villaService = new VillaServiceImpl();
-    private static FacilityService houseService = new HouseServiceImpl();
-    private static FacilityService roomService = new RoomServiceImpl();
+    private static ObjectService villaService = new VillaServiceImpl();
+    private static ObjectService houseService = new HouseServiceImpl();
+    private static ObjectService roomService = new RoomServiceImpl();
+
     public static void displayFacilityMenu() {
         String choose = "";
         do {
@@ -35,6 +37,8 @@ public class FacilityController {
                     displayMenuAddFacility();
                     break;
                 case "3":
+                    System.out.println("DANH SÁCH DỊCH VỤ ĐANG BẢO TRÌ");
+                    facilityService.displayFacilityMaintenance();
                     break;
                 case "4":
                     System.out.println("");
@@ -44,6 +48,7 @@ public class FacilityController {
             }
         } while (!choose.equals("4"));
     }
+
     private static void displayMenuAddFacility() {
         String choose = "";
         do {

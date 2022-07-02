@@ -1,7 +1,5 @@
 package model;
 
-import java.time.LocalDateTime;
-
 public class Room extends Facility {
     private String freeService;
 
@@ -12,7 +10,7 @@ public class Room extends Facility {
         this.freeService = freeService;
     }
 
-    public Room(String facilityId, String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType, String freeService) {
+    public Room(String facilityId, String nameService, double usableArea, int rentalCosts, int maximumNumOfPeople, String rentalType, String freeService) {
         super(facilityId, nameService, usableArea, rentalCosts, maximumNumOfPeople, rentalType);
         this.freeService = freeService;
     }

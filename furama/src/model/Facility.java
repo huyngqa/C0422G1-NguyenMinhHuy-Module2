@@ -6,14 +6,14 @@ public abstract class Facility {
     private String facilityId;
     private String nameService;
     private double usableArea;
-    private double rentalCosts;
+    private int rentalCosts;
     private int maximumNumOfPeople;
     private String rentalType;
 
     public Facility() {
     }
 
-    public Facility(String facilityId, String nameService, double usableArea, double rentalCosts, int maximumNumOfPeople, String rentalType) {
+    public Facility(String facilityId, String nameService, double usableArea, int rentalCosts, int maximumNumOfPeople, String rentalType) {
         this.facilityId = facilityId;
         this.nameService = nameService;
         this.usableArea = usableArea;
@@ -46,11 +46,11 @@ public abstract class Facility {
         this.usableArea = usableArea;
     }
 
-    public double getRentalCosts() {
+    public int getRentalCosts() {
         return rentalCosts;
     }
 
-    public void setRentalCosts(double rentalCosts) {
+    public void setRentalCosts(int rentalCosts) {
         this.rentalCosts = rentalCosts;
     }
 

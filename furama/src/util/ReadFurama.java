@@ -63,11 +63,11 @@ public class ReadFurama {
         for (String str : strings) {
             arr = str.split(",");
             if (arr[0].contains("VL")) {
-                facilityMap.put(new Villa(arr[0], arr[1], Double.parseDouble(arr[2]), Double.parseDouble(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6], Double.parseDouble(arr[7]), Integer.parseInt(arr[8])), Integer.parseInt(arr[9]));
+                facilityMap.put(new Villa(arr[0], arr[1], Double.parseDouble(arr[2]), Integer.parseInt(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6], Double.parseDouble(arr[7]), Integer.parseInt(arr[8])), Integer.parseInt(arr[9]));
             } else if (arr[0].contains("HO")) {
-                facilityMap.put(new House(arr[0], arr[1], Double.parseDouble(arr[2]), Double.parseDouble(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6], Byte.parseByte(arr[7])), Integer.parseInt(arr[8]));
+                facilityMap.put(new House(arr[0], arr[1], Double.parseDouble(arr[2]), Integer.parseInt(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6], Byte.parseByte(arr[7])), Integer.parseInt(arr[8]));
             } else {
-                facilityMap.put(new Room(arr[0], arr[1], Double.parseDouble(arr[2]), Double.parseDouble(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6]), Integer.parseInt(arr[7]));
+                facilityMap.put(new Room(arr[0], arr[1], Double.parseDouble(arr[2]), Integer.parseInt(arr[3]), Integer.parseInt(arr[4]), arr[5], arr[6]), Integer.parseInt(arr[7]));
             }
         }
         return facilityMap;

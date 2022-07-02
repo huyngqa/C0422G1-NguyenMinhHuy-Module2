@@ -70,7 +70,7 @@ public class Booking implements Comparable<Booking> {
     @Override
     public String toString() {
         return "Booking{" +
-                "Mã booking" + bookingId + "\n" +
+                "Mã booking: " + bookingId + "\n" +
                 "Ngày bắt đầu: " + FormatDate.getDateFormatted(startDay) + "\n" +
                 "Ngày kết thúc: " + FormatDate.getDateFormatted(endDay) + "\n" +
                 "Mã khách hàng: " + customerId.getPersonId() + "\n" +
@@ -94,7 +94,7 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public int compareTo(Booking b) {
-        if(this.startDay.compareTo(b.getStartDay()) > 1) {
+        if(this.startDay.compareTo(b.getStartDay()) >= 1) {
             return 1;
         } else if (this.startDay.compareTo(b.getStartDay())==0) {
             return this.endDay.compareTo(b.getEndDay());

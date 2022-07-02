@@ -1,9 +1,12 @@
 package service.impl;
 
+import common.CheckException;
 import common.CheckRegex;
+import common.TypeInformation;
+import common.UserException;
 import model.Facility;
 import model.House;
-import service.FacilityService;
+import service.ObjectService;
 import util.ReadFurama;
 import util.WriteFurama;
 
@@ -11,7 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class HouseServiceImpl implements FacilityService {
+public class HouseServiceImpl implements ObjectService {
     private Scanner scanner = new Scanner(System.in);
     private final String PATH_FILE_FACILITY = "furama/src/data/facility.csv";
 
@@ -19,12 +22,16 @@ public class HouseServiceImpl implements FacilityService {
     public Object addObject() {
         Map<Facility, Integer> facilityMap = ReadFurama.readFacilityToCSV(PATH_FILE_FACILITY);
         Set<Facility> set = facilityMap.keySet();
-        System.out.print("Nhập tên dịch vụ: ");
-        String name = scanner.nextLine();
+        String name;
+        do {
+            System.out.print("Nhập tên dịch vụ(Viết hoa chữ cái đầu và không có kí tự đặc biệt): ");
+            name = scanner.nextLine();
+        } while (!CheckRegex.checkRegexNameService(name));
         for (Facility facility : set) {
-            if (facility.getNameService().equalsIgnoreCase(name))
+            if (facility.getNameService().equalsIgnoreCase(name)) {
                 System.out.println("Dịch vụ này đã có!");
-            return facility;
+                return facility;
+            }
         }
         String id = "SVHO-";
         do {
@@ -32,50 +39,50 @@ public class HouseServiceImpl implements FacilityService {
             id += scanner.nextLine();
         } while (!CheckRegex.checkRegexFacilityId(id));
         double usableArea;
-        double rentalCosts;
-        int maximumNumOfPeople;
-        byte numOfFloor;
         while (true) {
             try {
                 System.out.print("Nhập diện tích sử dụng: ");
                 usableArea = Double.parseDouble(scanner.nextLine());
-                System.out.print("Nhập chi phí thuê: ");
-                rentalCosts = Double.parseDouble(scanner.nextLine());
-                System.out.print("Số người tối đa: ");
-                maximumNumOfPeople = Integer.parseInt(scanner.nextLine());
-                System.out.print("Số tầng: ");
-                numOfFloor = Byte.parseByte(scanner.nextLine());
+                CheckException.checkArea(usableArea);
                 break;
-            } catch (NumberFormatException exception) {
-                System.err.println("Vui lòng nhập số!");
+            } catch (NumberFormatException | UserException exception) {
+                System.err.println(exception.getMessage());
             }
         }
-        String rentalType = "";
-        do {
-            System.out.println("Chọn kiểu thuê\n" +
-                    "1. Thuê theo năm\n" +
-                    "2. Thuê theo tháng\n" +
-                    "3. Thuê theo ngày\n" +
-                    "4. Thuê theo giờ.");
-            System.out.print("Mời bạn chọn: ");
-            String choose = scanner.nextLine();
-            switch (choose) {
-                case "1":
-                    rentalType = "Thuê theo năm";
-                    break;
-                case "2":
-                    rentalType = "Thuê theo tháng";
-                    break;
-                case "3":
-                    rentalType = "Thuê theo ngày";
-                    break;
-                case "4":
-                    rentalType = "Thuê theo giờ";
-                    break;
-                default:
-                    System.out.println("Bạn chọn lại kiểu thuê!");
+        int rentalCosts;
+        while (true) {
+            try {
+                System.out.print("Nhập chi phí thuê: ");
+                rentalCosts = Integer.parseInt(scanner.nextLine());
+                CheckException.checkInteger(rentalCosts);
+                break;
+            } catch (NumberFormatException | UserException exception) {
+                System.err.println(exception.getMessage());
             }
-        } while (rentalType.equals(""));
+        }
+        int maximumNumOfPeople;
+        while (true) {
+            try {
+                System.out.print("Số người tối đa: ");
+                maximumNumOfPeople = Integer.parseInt(scanner.nextLine());
+                CheckException.checkMaxOfPeople(maximumNumOfPeople);
+                break;
+            } catch (NumberFormatException | UserException exception) {
+                System.err.println(exception.getMessage());
+            }
+        }
+        byte numOfFloor;
+        while (true) {
+            try {
+                System.out.print("Số tầng: ");
+                numOfFloor = Byte.parseByte(scanner.nextLine());
+                CheckException.checkInteger(numOfFloor);
+                break;
+            } catch (NumberFormatException | UserException exception) {
+                System.err.println(exception.getMessage());
+            }
+        }
+        String rentalType = TypeInformation.getRentalType();
         System.out.print("Tiêu chuẩn phòng: ");
         String roomStandard = scanner.nextLine();
         House house = new House(id, name, usableArea, rentalCosts, maximumNumOfPeople, rentalType, roomStandard, numOfFloor);
@@ -83,10 +90,5 @@ public class HouseServiceImpl implements FacilityService {
         WriteFurama.writeFacilityToCSV(facilityMap, PATH_FILE_FACILITY, false);
         System.out.println("Bạn đã thêm mới dịch vụ thành công");
         return house;
-    }
-
-    @Override
-    public void display() {
-
     }
 }

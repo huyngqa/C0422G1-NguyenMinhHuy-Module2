@@ -2,24 +2,15 @@ package service.impl;
 
 import model.Facility;
 import service.FacilityService;
-import service.ObjectService;
 import util.ReadFurama;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class FacilityServiceImpl implements FacilityService, ObjectService {
+public class FacilityServiceImpl implements FacilityService {
     private Scanner scanner = new Scanner(System.in);
-    private FacilityService villaService = new VillaServiceImpl();
-    private FacilityService roomService = new RoomServiceImpl();
-    private FacilityService houseService = new HouseServiceImpl();
     private final String PATH_FILE_FACILITY = "furama/src/data/facility.csv";
-
-    @Override
-    public Object addObject() {
-        return null;
-    }
 
     @Override
     public void display() {
@@ -35,7 +26,7 @@ public class FacilityServiceImpl implements FacilityService, ObjectService {
     }
 
     @Override
-    public Object getObject() {
+    public Facility getFacilityByName() {
         Map<Facility, Integer> mapFacility = ReadFurama.readFacilityToCSV(PATH_FILE_FACILITY);
         Set<Facility> set = mapFacility.keySet();
         for (Facility facility : set) {
@@ -44,10 +35,25 @@ public class FacilityServiceImpl implements FacilityService, ObjectService {
         System.out.print("Chọn tên dịch vụ: ");
         String name = scanner.nextLine();
         for (Facility facility : set) {
-            if(facility.getNameService().equalsIgnoreCase(name)) {
+            if (facility.getNameService().equalsIgnoreCase(name) && mapFacility.get(facility) < 5) {
                 return facility;
+            } else if(facility.getNameService().equalsIgnoreCase(name) && mapFacility.get(facility) == 5) {
+                System.err.println("Dịch vụ này đang sửa chữa");
+                return null;
             }
         }
+        System.err.println("Vui lòng chọn đúng tên trong danh sách");
         return null;
+    }
+
+    @Override
+    public void displayFacilityMaintenance() {
+        Map<Facility, Integer> mapFacility = ReadFurama.readFacilityToCSV(PATH_FILE_FACILITY);
+        Set<Facility> set = mapFacility.keySet();
+        for (Facility facility : set) {
+            if (mapFacility.get(facility) == 5) {
+                System.out.println(facility);
+            }
+        }
     }
 }
