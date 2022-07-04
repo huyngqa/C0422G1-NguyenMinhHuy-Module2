@@ -11,6 +11,7 @@ public class Booking implements Comparable<Booking> {
     private LocalDate endDay;
     private Customer customerId;
     private Facility nameService;
+    private byte status = 0;
 
     public Booking() {
     }
@@ -64,7 +65,22 @@ public class Booking implements Comparable<Booking> {
     }
 
     public String getInformationToCSV() {
-        return this.bookingId + "," + this.startDay + "," + this.endDay + "," + this.customerId.getPersonId() + "," + this.nameService.getNameService();
+        return bookingId + "," + startDay + "," + endDay + "," + customerId.getPersonId() + "," + nameService.getNameService() + "," + getStatus();
+    }
+
+    public byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(byte status) {
+        this.status = status;
+    }
+
+    public String createdContract() {
+        if(this.status == 0) {
+            return "Chưa tạo hợp đồng";
+        }
+        return "Đã tạo hợp đồng";
     }
 
     @Override
@@ -75,6 +91,7 @@ public class Booking implements Comparable<Booking> {
                 "Ngày kết thúc: " + FormatDate.getDateFormatted(endDay) + "\n" +
                 "Mã khách hàng: " + customerId.getPersonId() + "\n" +
                 "Tên dịch vụ: " + nameService.getNameService() +
+                "Trạng thái: " + createdContract() +
                 "}" + "\n" +
                 "---------------------------------------------";
     }
@@ -94,9 +111,9 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public int compareTo(Booking b) {
-        if(this.startDay.compareTo(b.getStartDay()) >= 1) {
+        if (this.startDay.compareTo(b.getStartDay()) >= 1) {
             return 1;
-        } else if (this.startDay.compareTo(b.getStartDay())==0) {
+        } else if (this.startDay.compareTo(b.getStartDay()) == 0) {
             return this.endDay.compareTo(b.getEndDay());
         } else {
             return -1;

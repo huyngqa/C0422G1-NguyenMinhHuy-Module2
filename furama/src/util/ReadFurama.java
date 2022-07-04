@@ -96,4 +96,27 @@ public class ReadFurama {
         }
         return bookings;
     }
+
+    public static List<Contract> readContractToCSV(String pathFile) {
+        List<Contract> contracts = new ArrayList<>();
+        List<String> strings = readObjectToCSV(pathFile);
+        String[] arr;
+        List<Customer> customers = readCustomerToCSV("furama/src/data/customer.csv");
+        Set<Booking> bookings = readBookingToCSV("furama/src/data/booking.csv");
+        Customer customer = null;
+        Booking booking = null;
+        for (String str : strings) {
+            arr = str.split(",");
+            for (Booking b : bookings) {
+                if (b.getNameService().equals(arr[1]))
+                    booking = b;
+            }
+            for (int i = 0; i < customers.size(); i++) {
+                if (customers.get(i).getPersonId().equals(arr[4]))
+                    customer = customers.get(i);
+            }
+            contracts.add(new Contract(arr[0], booking, Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), customer));
+        }
+        return contracts;
+    }
 }

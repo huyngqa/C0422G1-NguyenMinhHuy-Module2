@@ -86,9 +86,10 @@ public class BookingServiceImpl implements BookingService {
         } while (facility == null);
         int countUseFacility = facilityMap.get(facility) + 1;
         facilityMap.replace(facility, countUseFacility);
-        bookings.add(new Booking(idBooking, startDay, endDay, customer, facility));
-        WriteFurama.writeBookingToCSV(bookings, PATH_FILE_BOOKING, false);
+        Booking booking = new Booking(idBooking, startDay, endDay, customer, facility);
+        bookings.add(booking);
         WriteFurama.writeFacilityToCSV(facilityMap, PATH_FILE_FACILITY, false);
+        WriteFurama.writeBookingToCSV(bookings, PATH_FILE_BOOKING, false);
         System.out.println("Booking thành công!");
     }
 

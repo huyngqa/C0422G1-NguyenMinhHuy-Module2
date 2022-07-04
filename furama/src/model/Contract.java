@@ -3,14 +3,14 @@ package model;
 public class Contract {
     private String contractId;
     private Booking bookingId;
-    private double depositAdvance;
-    private double totalPayment;
+    private int depositAdvance;
+    private int totalPayment;
     private Customer customerId;
 
     public Contract() {
     }
 
-    public Contract(String contractId, Booking bookingId, double depositAdvance, double totalPayment, Customer customerId) {
+    public Contract(String contractId, Booking bookingId, int depositAdvance, int totalPayment, Customer customerId) {
         this.contractId = contractId;
         this.bookingId = bookingId;
         this.depositAdvance = depositAdvance;
@@ -34,19 +34,19 @@ public class Contract {
         this.bookingId = bookingId;
     }
 
-    public double getDepositAdvance() {
+    public int getDepositAdvance() {
         return depositAdvance;
     }
 
-    public void setDepositAdvance(double depositAdvance) {
+    public void setDepositAdvance(int depositAdvance) {
         this.depositAdvance = depositAdvance;
     }
 
-    public double getTotalPayment() {
+    public int getTotalPayment() {
         return totalPayment;
     }
 
-    public void setTotalPayment(double totalPayment) {
+    public void setTotalPayment(int totalPayment) {
         this.totalPayment = totalPayment;
     }
 
@@ -56,6 +56,10 @@ public class Contract {
 
     public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
+    }
+
+    public String getInformationToCSV() {
+        return contractId + "," + bookingId.getBookingId() + "," + depositAdvance + "," + totalPayment + customerId.getPersonId();
     }
 
     @Override

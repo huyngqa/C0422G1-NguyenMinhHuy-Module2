@@ -1,9 +1,6 @@
 package util;
 
-import model.Booking;
-import model.Customer;
-import model.Employee;
-import model.Facility;
+import model.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -64,6 +61,13 @@ public class WriteFurama {
         List<String> strings = new ArrayList<>();
         for (Booking booking : bookings) {
             strings.add(booking.getInformationToCSV());
+        }
+        writeObjectToCSV(strings, pathFile, append);
+    }
+    public static void writeContractToCSV(List<Contract> contracts, String pathFile, boolean append) {
+        List<String> strings = new ArrayList<>();
+        for (Contract contract : contracts) {
+            strings.add(contract.getInformationToCSV());
         }
         writeObjectToCSV(strings, pathFile, append);
     }
