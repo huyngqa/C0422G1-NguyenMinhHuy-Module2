@@ -92,7 +92,7 @@ public class ReadFurama {
                 if (f.getNameService().equals(arr[4]))
                     facility = f;
             }
-            bookings.add(new Booking(arr[0], LocalDate.parse(arr[1]), LocalDate.parse(arr[2]), customer, facility));
+            bookings.add(new Booking(arr[0], LocalDate.parse(arr[1]), LocalDate.parse(arr[2]), customer, facility, Integer.parseInt(arr[5])));
         }
         return bookings;
     }
@@ -101,21 +101,16 @@ public class ReadFurama {
         List<Contract> contracts = new ArrayList<>();
         List<String> strings = readObjectToCSV(pathFile);
         String[] arr;
-        List<Customer> customers = readCustomerToCSV("furama/src/data/customer.csv");
         Set<Booking> bookings = readBookingToCSV("furama/src/data/booking.csv");
-        Customer customer = null;
         Booking booking = null;
         for (String str : strings) {
             arr = str.split(",");
             for (Booking b : bookings) {
-                if (b.getNameService().equals(arr[1]))
+                if (b.getBookingId().equals(arr[1])) {
                     booking = b;
+                }
             }
-            for (int i = 0; i < customers.size(); i++) {
-                if (customers.get(i).getPersonId().equals(arr[4]))
-                    customer = customers.get(i);
-            }
-            contracts.add(new Contract(arr[0], booking, Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), customer));
+            contracts.add(new Contract(arr[0], booking, Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), booking));
         }
         return contracts;
     }

@@ -1,13 +1,16 @@
 package controller;
 
 import service.BookingService;
+import service.ContractService;
 import service.impl.BookingServiceImpl;
+import service.impl.ContractServiceImpl;
 
 import java.util.Scanner;
 
 public class BookingController {
     private static Scanner scanner = new Scanner(System.in);
     private static BookingService bookingService = new BookingServiceImpl();
+    private static ContractService contractService = new ContractServiceImpl();
     public static void displayBookingMenu() {
         String choose = "";
         do {
@@ -30,8 +33,10 @@ public class BookingController {
                     bookingService.add();
                     break;
                 case "3":
+                    contractService.add();
                     break;
                 case "4":
+                    contractService.display();
                     break;
                 case "5":
                     break;

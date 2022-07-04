@@ -1,6 +1,7 @@
 package service.impl;
 
 import common.CheckException;
+import common.FormatDate;
 import common.Random;
 import common.UserException;
 import model.Booking;
@@ -13,6 +14,7 @@ import util.ReadFurama;
 import util.WriteFurama;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -84,9 +86,26 @@ public class BookingServiceImpl implements BookingService {
         do {
             facility = facilityService.getFacilityByName();
         } while (facility == null);
+        if (facilityMap.get(facility) == 5) {
+            System.out.println("Dịch vụ đang sửa chưa, bạn vui lòng booking lại");
+            return;
+        }
+        for (Booking booking : bookings) {
+            if ((Period.between(booking.getEndDay(), startDay).getDays() < 0 &&
+                    Period.between(booking.getStartDay(), startDay).getDays() > 0)
+                    && booking.getNameService().getNameService().equals(facility.getNameService())) {
+                System.out.println("Ngày bạn đặt dịch vụ này đã có người sử dụng, mời bạn tạo lại.");
+                return;
+            } else if (Period.between(endDay, booking.getStartDay()).getDays() < 0
+                    && booking.getNameService().getNameService().equals(facility.getNameService())) {
+                System.out.println("Ngày kết thúc của bạn đã cấn qua thời gian sử dụng của khách hàng khác. Vui lòng tạo lại!!!");
+                return;
+            }
+        }
         int countUseFacility = facilityMap.get(facility) + 1;
         facilityMap.replace(facility, countUseFacility);
-        Booking booking = new Booking(idBooking, startDay, endDay, customer, facility);
+        int status = 0;
+        Booking booking = new Booking(idBooking, startDay, endDay, customer, facility, status);
         bookings.add(booking);
         WriteFurama.writeFacilityToCSV(facilityMap, PATH_FILE_FACILITY, false);
         WriteFurama.writeBookingToCSV(bookings, PATH_FILE_BOOKING, false);
@@ -109,5 +128,23 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void editById(String id) {
 
+    }
+
+    @Override
+    public Booking getBookingById() {
+        Set<Booking> bookings = ReadFurama.readBookingToCSV(PATH_FILE_BOOKING);
+        System.out.println("Tạo hợp đồng cho booking!");
+        Booking b = null;
+        for (Booking booking : bookings) {
+            if(booking.getStatus() == 0) {
+                System.out.println("Mã booking: " + booking.getBookingId() + ", mã khách hàng: " + booking.getCustomerId().getPersonId()
+                        + ", tên dịch vụ: " + booking.getNameService().getNameService());
+                b = booking;
+                booking.setStatus(1);
+                break;
+            }
+        }
+        WriteFurama.writeBookingToCSV(bookings, PATH_FILE_BOOKING, false);
+        return b;
     }
 }

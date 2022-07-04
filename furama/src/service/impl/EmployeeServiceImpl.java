@@ -48,8 +48,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         String sex = TypeInformation.getTypeSex();
         System.out.print("Nhập số CMND: ");
         String identityCardNumber = scanner.nextLine();
-        System.out.print("Nhập số điện thoại: ");
-        String tel = scanner.nextLine();
+        String tel;
+        do {
+            System.out.print("Nhập số điện thoại(0XXXXXXXXX): ");
+            tel = scanner.nextLine();
+        } while (!CheckRegex.checkRegexPhone(tel));
         System.out.print("Nhập số email: ");
         String email = scanner.nextLine();
         String level = TypeInformation.getTypeLevel();
@@ -119,8 +122,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employees.get(i).setSex(TypeInformation.getTypeSex());
                 System.out.print("Chỉnh sửa số CMND: ");
                 employees.get(i).setIdentityCardNumber(scanner.nextLine());
-                System.out.print("Chỉnh sửa số điện thoại: ");
-                employees.get(i).setTel(scanner.nextLine());
+                String tel;
+                do {
+                    System.out.print("Nhập số điện thoại(0XXXXXXXXX): ");
+                    tel = scanner.nextLine();
+                } while (!CheckRegex.checkRegexPhone(tel));
+                employees.get(i).setTel(tel);
                 System.out.print("Chỉnh sửa email: ");
                 employees.get(i).setEmail(scanner.nextLine());
                 System.out.println("Chỉnh sửa trình độ");

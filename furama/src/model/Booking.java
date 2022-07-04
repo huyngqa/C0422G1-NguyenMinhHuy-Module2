@@ -11,17 +11,18 @@ public class Booking implements Comparable<Booking> {
     private LocalDate endDay;
     private Customer customerId;
     private Facility nameService;
-    private byte status = 0;
+    private int status;
 
     public Booking() {
     }
 
-    public Booking(String bookingId, LocalDate startDay, LocalDate endDay, Customer customerId, Facility nameService) {
+    public Booking(String bookingId, LocalDate startDay, LocalDate endDay, Customer customerId, Facility nameService, int status) {
         this.bookingId = bookingId;
         this.startDay = startDay;
         this.endDay = endDay;
         this.customerId = customerId;
         this.nameService = nameService;
+        this.status = status;
     }
 
     public String getBookingId() {
@@ -65,19 +66,19 @@ public class Booking implements Comparable<Booking> {
     }
 
     public String getInformationToCSV() {
-        return bookingId + "," + startDay + "," + endDay + "," + customerId.getPersonId() + "," + nameService.getNameService() + "," + getStatus();
+        return bookingId + "," + startDay + "," + endDay + "," + customerId.getPersonId() + "," + nameService.getNameService() + "," + status;
     }
 
-    public byte getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(byte status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public String createdContract() {
-        if(this.status == 0) {
+    public String checkedBooking() {
+        if (this.status == 0) {
             return "Chưa tạo hợp đồng";
         }
         return "Đã tạo hợp đồng";
@@ -90,8 +91,8 @@ public class Booking implements Comparable<Booking> {
                 "Ngày bắt đầu: " + FormatDate.getDateFormatted(startDay) + "\n" +
                 "Ngày kết thúc: " + FormatDate.getDateFormatted(endDay) + "\n" +
                 "Mã khách hàng: " + customerId.getPersonId() + "\n" +
-                "Tên dịch vụ: " + nameService.getNameService() +
-                "Trạng thái: " + createdContract() +
+                "Tên dịch vụ: " + nameService.getNameService() + "\n" +
+                "Trạng thái: " + checkedBooking() +
                 "}" + "\n" +
                 "---------------------------------------------";
     }

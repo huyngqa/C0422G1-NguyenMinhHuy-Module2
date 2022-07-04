@@ -48,8 +48,11 @@ public class CustomerServiceImpl implements CustomerService{
         String sex = TypeInformation.getTypeSex();
         System.out.print("Nhập số CMND: ");
         String identityCardNumber = scanner.nextLine();
-        System.out.print("Nhập số điện thoại: ");
-        String tel = scanner.nextLine();
+        String tel;
+        do {
+            System.out.print("Nhập số điện thoại(0XXXXXXXXX): ");
+            tel = scanner.nextLine();
+        } while (!CheckRegex.checkRegexPhone(tel));
         System.out.print("Nhập số email: ");
         String email = scanner.nextLine();
         String typeCustomer = TypeInformation.getTypeCustomer();
@@ -110,8 +113,12 @@ public class CustomerServiceImpl implements CustomerService{
                 customers.get(i).setSex(TypeInformation.getTypeSex());
                 System.out.print("Chỉnh sửa số CMND: ");
                 customers.get(i).setIdentityCardNumber(scanner.nextLine());
-                System.out.print("Chỉnh sửa số điện thoại: ");
-                customers.get(i).setTel(scanner.nextLine());
+                String tel;
+                do {
+                    System.out.print("Chỉnh sửa số điện thoại(0XXXXXXXXX): ");
+                    tel = scanner.nextLine();
+                } while (!CheckRegex.checkRegexPhone(tel));
+                customers.get(i).setTel(tel);
                 System.out.print("Chỉnh sửa email: ");
                 customers.get(i).setEmail(scanner.nextLine());
                 System.out.println("Chỉnh sửa loại khách");

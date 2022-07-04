@@ -2,20 +2,20 @@ package model;
 
 public class Contract {
     private String contractId;
-    private Booking bookingId;
+    private Booking booking;
     private int depositAdvance;
     private int totalPayment;
-    private Customer customerId;
+    private Booking customer;
 
     public Contract() {
     }
 
-    public Contract(String contractId, Booking bookingId, int depositAdvance, int totalPayment, Customer customerId) {
+    public Contract(String contractId, Booking booking, int depositAdvance, int totalPayment, Booking customer) {
         this.contractId = contractId;
-        this.bookingId = bookingId;
+        this.booking = booking;
         this.depositAdvance = depositAdvance;
         this.totalPayment = totalPayment;
-        this.customerId = customerId;
+        this.customer = customer;
     }
 
     public String getContractId() {
@@ -26,12 +26,12 @@ public class Contract {
         this.contractId = contractId;
     }
 
-    public Booking getBookingId() {
-        return bookingId;
+    public Booking getBooking() {
+        return booking;
     }
 
-    public void setBookingId(Booking bookingId) {
-        this.bookingId = bookingId;
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 
     public int getDepositAdvance() {
@@ -50,26 +50,26 @@ public class Contract {
         this.totalPayment = totalPayment;
     }
 
-    public Customer getCustomerId() {
-        return customerId;
+    public Booking getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Booking customer) {
+        this.customer = customer;
     }
 
     public String getInformationToCSV() {
-        return contractId + "," + bookingId.getBookingId() + "," + depositAdvance + "," + totalPayment + customerId.getPersonId();
+        return contractId + "," + booking.getBookingId() + "," + depositAdvance + "," + totalPayment + "," + booking.getCustomerId().getPersonId();
     }
 
     @Override
     public String toString() {
         return "Contract{" +
                 "Số hợp đồng: " + contractId + "\n" +
-                "Mã booking: " + bookingId.getBookingId() + "\n" +
+                "Mã booking: " + booking.getBookingId() + "\n" +
                 "Số tiền cọc trước: " + depositAdvance + "\n" +
                 "Tổng tiền thanh toán: " + totalPayment + "\n" +
-                "Mã khách hàng: " + customerId.getPersonId() +
+                "Mã khách hàng: " + booking.getCustomerId().getPersonId() +
                 "}" + "\n" +
                 "---------------------------------------------";
     }

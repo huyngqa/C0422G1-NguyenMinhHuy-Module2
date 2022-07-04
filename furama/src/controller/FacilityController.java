@@ -12,9 +12,9 @@ import java.util.Scanner;
 public class FacilityController {
     private static Scanner scanner = new Scanner(System.in);
     private static FacilityService facilityService = new FacilityServiceImpl();
-    private static ObjectService villaService = new VillaServiceImpl();
-    private static ObjectService houseService = new HouseServiceImpl();
-    private static ObjectService roomService = new RoomServiceImpl();
+    private static ObjectService facility;
+//    private static ObjectService houseService = new HouseServiceImpl();
+//    private static ObjectService roomService = new RoomServiceImpl();
 
     public static void displayFacilityMenu() {
         String choose = "";
@@ -23,6 +23,8 @@ public class FacilityController {
                     "\n 1. Hiển thị các dịch vụ" +
                     "\n 2. Thêm mới dịch vụ" +
                     "\n 3. Hiển thị danh sách đang bảo trì" +
+                    "\n 4. Bảo trì dịch vụ" +
+                    "\n 5. Bảo trì tất cả dịch vụ" +
                     "\n 4. Quay lại menu");
             System.out.print("Nhập lựa chọn của bạn: ");
             choose = scanner.nextLine();
@@ -41,12 +43,20 @@ public class FacilityController {
                     facilityService.displayFacilityMaintenance();
                     break;
                 case "4":
+                    System.out.println("Bảo trì dịch vụ theo tên");
+                    facilityService.repairFacility();
+                    break;
+                case "5":
+                    System.out.println("Bảo trì tất cả dịch vụ");
+                    facilityService.repairAllFacility();
+                    break;
+                case "6":
                     System.out.println("");
                     break;
                 default:
                     System.out.println("Lựa chọn của bạn chưa có! Vui lòng chọn lại");
             }
-        } while (!choose.equals("4"));
+        } while (!choose.equals("6"));
     }
 
     private static void displayMenuAddFacility() {
@@ -61,13 +71,16 @@ public class FacilityController {
             choose = scanner.nextLine();
             switch (choose) {
                 case "1":
-                    villaService.addObject();
+                    facility = new VillaServiceImpl();
+                    facility.addObject();
                     break;
                 case "2":
-                    houseService.addObject();
+                    facility = new HouseServiceImpl();
+                    facility.addObject();
                     break;
                 case "3":
-                    roomService.addObject();
+                    facility = new RoomServiceImpl();
+                    facility.addObject();
                     break;
                 case "4":
                     System.out.println("Quay về menu");
