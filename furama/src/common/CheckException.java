@@ -6,8 +6,8 @@ import java.time.Period;
 public class CheckException {
     public static void checkDateOfBirth(LocalDate dateOfBirth) throws UserException {
         LocalDate now = LocalDate.now();
-        boolean checkAge = Period.between(now, dateOfBirth).getYears() < 18
-                || Period.between(now, dateOfBirth).getYears() > 100;
+        boolean checkAge = Period.between(dateOfBirth, now).getYears() < 18
+                || Period.between(dateOfBirth, now).getYears() > 100;
         if (checkAge) {
             throw new UserException("Tuổi bạn phải từ 18-100!");
         }

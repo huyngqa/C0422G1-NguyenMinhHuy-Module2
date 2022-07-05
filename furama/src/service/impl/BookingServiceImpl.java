@@ -1,7 +1,6 @@
 package service.impl;
 
 import common.CheckException;
-import common.FormatDate;
 import common.Random;
 import common.UserException;
 import model.Booking;
@@ -29,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void add() {
-        List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         if (customers.isEmpty()) {
             System.err.println("Chưa có dữ liệu, mời bạn chọn chức năng thêm mới khách hàng!");
             return;

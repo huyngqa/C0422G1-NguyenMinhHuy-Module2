@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerService{
@@ -22,8 +23,21 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void add() {
-        System.out.print("Nhập mã khách hàng: ");
-        String customerId = scanner.nextLine();
+        Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        boolean temp = true;
+        String customerId;
+        do  {
+            System.out.print("Nhập mã khách hàng: ");
+            customerId = scanner.nextLine();
+            for (Customer customer : customers.keySet()) {
+                temp = false;
+                if (customer.getPersonId().equalsIgnoreCase(customerId)) {
+                    System.out.println("Mã đã tồn tại, mời bạn nhập lại");
+                    temp = true;
+                    break;
+                }
+            }
+        }while (temp);
         String name;
         do {
             System.out.print("Nhập tên khách hàng: ");
@@ -46,31 +60,66 @@ public class CustomerServiceImpl implements CustomerService{
             }
         }
         String sex = TypeInformation.getTypeSex();
-        System.out.print("Nhập số CMND: ");
-        String identityCardNumber = scanner.nextLine();
+        String identityCardNumber;
+        do  {
+            do {
+                System.out.print("Nhập số CMND(gồm 9 chữ số): ");
+                identityCardNumber = scanner.nextLine();
+            } while (!CheckRegex.checkRegexIdentityCard(identityCardNumber));
+            for (Customer customer : customers.keySet()) {
+                temp = false;
+                if (customer.getIdentityCardNumber().equalsIgnoreCase(identityCardNumber)) {
+                    System.out.println("Số CMND đã tồn tại");
+                    temp = true;
+                    break;
+                }
+            }
+        }while (temp);
         String tel;
-        do {
-            System.out.print("Nhập số điện thoại(0XXXXXXXXX): ");
-            tel = scanner.nextLine();
-        } while (!CheckRegex.checkRegexPhone(tel));
-        System.out.print("Nhập số email: ");
-        String email = scanner.nextLine();
+        do  {
+            do {
+                System.out.print("Nhập số điện thoại(0XXXXXXXXX): ");
+                tel = scanner.nextLine();
+            } while (!CheckRegex.checkRegexPhone(tel));
+            for (Customer customer : customers.keySet()) {
+                temp = false;
+                if (customer.getTel().equalsIgnoreCase(tel)) {
+                    System.out.println("Số điện thoại đã có người sử dụng");
+                    temp = true;
+                    break;
+                }
+            }
+        }while (temp);
+        String email;
+        do  {
+            do {
+                System.out.print("Nhập email(abc@abc.xyz): ");
+                email = scanner.nextLine();
+            } while (!CheckRegex.checkRegexEmail(email));
+            for (Customer customer : customers.keySet()) {
+                temp = false;
+                if (customer.getEmail().equalsIgnoreCase(email)) {
+                    System.out.println("Email đã có người sử dụng");
+                    temp = true;
+                    break;
+                }
+            }
+        }while (temp);
         String typeCustomer = TypeInformation.getTypeCustomer();
         System.out.print("Nhập địa chỉ khách hàng: ");
         String address = scanner.nextLine();
-        List<Customer> customers = new ArrayList<>();
-        customers.add(new Customer(customerId, name, birthDay, sex, identityCardNumber, tel, email, typeCustomer, address));
-        WriteFurama.writeCustomerToCSV(customers, PATH_FILE_CUSTOMER, true);
+        customers.put(new Customer(customerId, name, birthDay, sex, identityCardNumber, tel, email, typeCustomer, address),0);
+        WriteFurama.writeCustomerToCSV(customers, PATH_FILE_CUSTOMER, false);
         System.out.println("Bạn đã thêm thành công khách hàng: " + name);
     }
 
     @Override
     public void display() {
-        List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         if (customers.isEmpty()) {
             System.out.println("Chưa có thông tin, mời bạn thêm vào");
         } else {
-            for (Customer customer : customers) {
+            for (Customer customer : customers.keySet()) {
                 System.out.println(customer);
             }
         }
@@ -78,10 +127,10 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void editById(String id) {
-        List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
-        for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getPersonId().equalsIgnoreCase(id)) {
-                System.out.println(customers.get(i));
+        Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        for (Customer customer : customers.keySet()) {
+            if (customer.getPersonId().equalsIgnoreCase(id)) {
+                System.out.println(customer);
                 System.out.println("Đây là thông tin khách hàng bạn muốn chỉnh sửa.");
                 System.out.println("Chỉnh sửa tên");
                 String name;
@@ -92,7 +141,7 @@ public class CustomerServiceImpl implements CustomerService{
                         System.err.println("Tên phải viết hoa chữ cái đầu, không được có kí tự số và kí tự đặc biệt!");
                         continue;
                     }
-                    customers.get(i).setName(name);
+                    customer.setName(name);
                 }while (!CheckRegex.checkRegexPersonName(name));
                 System.out.println("Chỉnh sửa ngày sinh");
                 LocalDate dateOfBirth;
@@ -101,7 +150,7 @@ public class CustomerServiceImpl implements CustomerService{
                         System.out.print("Nhập ngày tháng năm sinh theo định dạng dd-MM-yyyy: ");
                         dateOfBirth = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                         CheckException.checkDateOfBirth(dateOfBirth);
-                        customers.get(i).setDateOfBirth(dateOfBirth);
+                        customer.setDateOfBirth(dateOfBirth);
                         break;
                     } catch (DateTimeParseException e) {
                         System.err.println("Định dạng ngày tháng năm 'dd-MM-yyyy'!");
@@ -110,23 +159,65 @@ public class CustomerServiceImpl implements CustomerService{
                     }
                 }
                 System.out.println("Chỉnh sửa giới tính");
-                customers.get(i).setSex(TypeInformation.getTypeSex());
-                System.out.print("Chỉnh sửa số CMND: ");
-                customers.get(i).setIdentityCardNumber(scanner.nextLine());
+                customer.setSex(TypeInformation.getTypeSex());
+                System.out.println("Chỉnh sửa số CMND: ");
+                boolean temp = true;
+                String identityCardNumber;
+                do  {
+                    do {
+                        System.out.print("Nhập số CMND(gồm 9 chữ số): ");
+                        identityCardNumber = scanner.nextLine();
+                    } while (!CheckRegex.checkRegexIdentityCard(identityCardNumber));
+                    for (Customer c : customers.keySet()) {
+                        temp = false;
+                        if (c.getIdentityCardNumber().equalsIgnoreCase(identityCardNumber)) {
+                            System.out.println("Số CMND đã tồn tại");
+                            temp = true;
+                            break;
+                        }
+                    }
+                }while (temp);
+                customer.setIdentityCardNumber(identityCardNumber);
+                System.out.println("Chỉnh sửa số điện thoại");
                 String tel;
-                do {
-                    System.out.print("Chỉnh sửa số điện thoại(0XXXXXXXXX): ");
-                    tel = scanner.nextLine();
-                } while (!CheckRegex.checkRegexPhone(tel));
-                customers.get(i).setTel(tel);
-                System.out.print("Chỉnh sửa email: ");
-                customers.get(i).setEmail(scanner.nextLine());
+                do  {
+                    do {
+                        System.out.print("Nhập số điện thoại(0XXXXXXXXX): ");
+                        tel = scanner.nextLine();
+                    } while (!CheckRegex.checkRegexPhone(tel));
+                    for (Customer c : customers.keySet()) {
+                        temp = false;
+                        if (c.getTel().equalsIgnoreCase(tel)) {
+                            System.out.println("Số điện thoại đã có người sử dụng");
+                            temp = true;
+                            break;
+                        }
+                    }
+                }while (temp);
+                customer.setTel(tel);
+                System.out.println("Chỉnh sửa email: ");
+                String email;
+                do  {
+                    do {
+                        System.out.print("Nhập email(abc@abc.xyz): ");
+                        email = scanner.nextLine();
+                    } while (!CheckRegex.checkRegexEmail(email));
+                    for (Customer c : customers.keySet()) {
+                        temp = false;
+                        if (c.getEmail().equalsIgnoreCase(email)) {
+                            System.out.println("Email đã có người sử dụng");
+                            temp = true;
+                            break;
+                        }
+                    }
+                }while (temp);
+                customer.setEmail(email);
                 System.out.println("Chỉnh sửa loại khách");
-                customers.get(i).setTypeCustomer(TypeInformation.getTypeCustomer());
+                customer.setTypeCustomer(TypeInformation.getTypeCustomer());
                 System.out.print("Chỉnh sửa địa chỉ khách hàng: ");
-                customers.get(i).setAddress(scanner.nextLine());
+                customer.setAddress(scanner.nextLine());
                 System.out.println("Thông tin đã được cập nhật");
-                System.out.println(customers.get(i));
+                System.out.println(customer);
                 WriteFurama.writeCustomerToCSV(customers, PATH_FILE_CUSTOMER, false);
                 return;
             }
@@ -136,16 +227,16 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer getCustomerById() {
-        List<Customer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         System.out.println("Danh sách khách hàng");
-        for (Customer c : customers) {
+        for (Customer c : customers.keySet()) {
             System.out.println("ID: " + c.getPersonId() + "," + "tên KH: " + c.getName() + ", " + "sđt: " + c.getTel() + ", " + "email: " + c.getEmail());
         }
         System.out.print("Chọn mã khách hàng: ");
         String id = scanner.nextLine();
-        for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getPersonId().equalsIgnoreCase(id)) {
-                return customers.get(i);
+        for (Customer c : customers.keySet()) {
+            if (c.getPersonId().equalsIgnoreCase(id)) {
+                return c;
             }
         }
         return null;

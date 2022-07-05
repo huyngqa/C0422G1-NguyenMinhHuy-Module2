@@ -1,5 +1,8 @@
 package external_exercises;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Abc {
     public static String solution(String str) {
         String result = "";
@@ -16,6 +19,12 @@ public class Abc {
     }
 
     public static void main(String[] args) {
-        System.out.println(solution("CodeGymDaNang"));
+//        System.out.println(solution("CodeGymDaNang"));
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(1);
+        queue.add(1);
+        queue.add(1);
+        queue.add(1);
+        System.out.println(queue.size());
     }
 }

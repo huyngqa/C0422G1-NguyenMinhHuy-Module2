@@ -8,4 +8,12 @@ public class Random {
         int n4 = (int) Math.floor(Math.random() * 10);
         return "" + n1 + n2 + n3 + n4;
     }
+    public static int randomPromotion() {
+        int random = (int) Math.floor(Math.random() * 3) + 1;
+        random *= 10;
+        if(random == 30) {
+            random = 50;
+        }
+        return random;
+    }
 }

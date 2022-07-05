@@ -34,13 +34,13 @@ public class ReadFurama {
     }
 
 
-    public static List<Customer> readCustomerToCSV(String pathFile) {
-        List<Customer> customers = new ArrayList<>();
+    public static Map<Customer,Integer> readCustomerToCSV(String pathFile) {
+        Map<Customer,Integer> customers = new LinkedHashMap<>();
         List<String> strings = readObjectToCSV(pathFile);
         String[] arr;
         for (int i = 0; i < strings.size(); i++) {
             arr = strings.get(i).split(",");
-            customers.add(new Customer(arr[0], arr[1], LocalDate.parse(arr[2]), arr[3], arr[4], arr[5], arr[6], arr[7], arr[8]));
+            customers.put(new Customer(arr[0], arr[1], LocalDate.parse(arr[2]), arr[3], arr[4], arr[5], arr[6], arr[7], arr[8]),Integer.parseInt(arr[9]));
         }
         return customers;
     }
@@ -77,16 +77,16 @@ public class ReadFurama {
         Set<Booking> bookings = new TreeSet<>();
         List<String> strings = readObjectToCSV(pathFile);
         String[] arr;
-        List<Customer> customers = readCustomerToCSV("furama/src/data/customer.csv");
+        Map<Customer, Integer> customers = readCustomerToCSV("furama/src/data/customer.csv");
         Map<Facility, Integer> facilityMap = readFacilityToCSV("furama/src/data/facility.csv");
         Set<Facility> set = facilityMap.keySet();
         Customer customer = null;
         Facility facility = null;
         for (String str : strings) {
             arr = str.split(",");
-            for (int i = 0; i < customers.size(); i++) {
-                if (customers.get(i).getPersonId().equals(arr[3]))
-                    customer = customers.get(i);
+            for (Customer c : customers.keySet()) {
+                if (c.getPersonId().equals(arr[3]))
+                    customer = c;
             }
             for (Facility f : set) {
                 if (f.getNameService().equals(arr[4]))

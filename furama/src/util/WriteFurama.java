@@ -32,10 +32,10 @@ public class WriteFurama {
         }
     }
 
-    public static void writeCustomerToCSV(List<Customer> customers, String pathFile, boolean append) {
+    public static void writeCustomerToCSV(Map<Customer, Integer> customerMap, String pathFile, boolean append) {
         List<String> strings = new ArrayList<>();
-        for (Customer customer : customers) {
-            strings.add(customer.getInformationToCSV());
+        for (Customer customer : customerMap.keySet()) {
+            strings.add(customer.getInformationToCSV() + "," + customerMap.get(customer));
         }
         writeObjectToCSV(strings, pathFile, append);
     }
@@ -50,7 +50,7 @@ public class WriteFurama {
 
     public static void writeFacilityToCSV(Map<Facility, Integer> facilityMap, String pathFile, boolean append) {
         List<String> strings = new ArrayList<>();
-        Set<Facility> set = facilityMap.keySet(); 
+        Set<Facility> set = facilityMap.keySet();
         for (Facility facility : set) {
             strings.add(facility.getInformationToCSV() + "," + facilityMap.get(facility));
         }
@@ -64,6 +64,7 @@ public class WriteFurama {
         }
         writeObjectToCSV(strings, pathFile, append);
     }
+
     public static void writeContractToCSV(List<Contract> contracts, String pathFile, boolean append) {
         List<String> strings = new ArrayList<>();
         for (Contract contract : contracts) {

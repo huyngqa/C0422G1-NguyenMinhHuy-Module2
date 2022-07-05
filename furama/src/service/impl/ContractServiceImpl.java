@@ -1,20 +1,21 @@
 package service.impl;
 
-import com.sun.scenario.effect.impl.sw.java.JSWColorAdjustPeer;
 import common.CheckException;
 import common.Random;
 import common.UserException;
 import model.Booking;
 import model.Contract;
 import model.Customer;
-import model.Facility;
 import service.BookingService;
 import service.ContractService;
 import service.CustomerService;
 import util.ReadFurama;
 import util.WriteFurama;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 public class ContractServiceImpl implements ContractService {
     private Scanner scanner = new Scanner(System.in);
@@ -66,16 +67,40 @@ public class ContractServiceImpl implements ContractService {
                 System.out.println(exception.getMessage());
             }
         }
+        Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
+        String choice;
+        for (Customer customer : customers.keySet()) {
+            if (booking.getCustomerId().getPersonId().equals(customer.getPersonId())
+                    && customers.get(customer) != 0) {
+                System.out.println("Bạn có mã giảm giá, bạn có muôn sử dụng không?");
+                while (true) {
+                    System.out.println("YES/NO?");
+                    System.out.print("Mời bạn chọn: ");
+                    choice = scanner.nextLine();
+                    if (choice.equalsIgnoreCase("yes")) {
+                        totalPayment -= totalPayment * customers.get(customer) / 100;
+                        customers.replace(customer,0);
+                        break;
+                    } else if(!choice.equalsIgnoreCase("no")) {
+                        System.out.print("Vui lòng chọn: ");
+                        System.err.println("YES/NO!!!");
+                        continue;
+                    }
+                    break;
+                }
+            }
+        }
         Contract contract = new Contract(idContract, booking, depositAdvance, totalPayment, booking);
         contracts.add(contract);
         WriteFurama.writeContractToCSV(contracts, PATH_FILE_CONTRACT, false);
+        WriteFurama.writeCustomerToCSV(customers, PATH_FILE_CUSTOMER, false);
         System.out.println("Tạo hợp đồng thành công!!!");
     }
 
     @Override
     public void display() {
         List<Contract> contracts = ReadFurama.readContractToCSV(PATH_FILE_CONTRACT);
-        if(contracts.isEmpty()) {
+        if (contracts.isEmpty()) {
             System.out.println("Chưa có dữ liệu");
             return;
         }
