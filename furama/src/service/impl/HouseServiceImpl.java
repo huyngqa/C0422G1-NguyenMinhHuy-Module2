@@ -33,8 +33,9 @@ public class HouseServiceImpl implements ObjectService {
                 return facility;
             }
         }
-        String id = "SVHO-";
+        String id;
         do {
+            id = "SVHO-";
             System.out.print("Nhập mã dịch vụ (gồm có 4 số): ");
             id += scanner.nextLine();
         } while (!CheckRegex.checkRegexFacilityId(id));

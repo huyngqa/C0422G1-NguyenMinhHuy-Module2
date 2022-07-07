@@ -13,10 +13,11 @@ import util.ReadFurama;
 import util.WriteFurama;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class BookingServiceImpl implements BookingService {
     private Scanner scanner = new Scanner(System.in);
@@ -90,12 +91,12 @@ public class BookingServiceImpl implements BookingService {
             return;
         }
         for (Booking booking : bookings) {
-            if ((Period.between(booking.getEndDay(), startDay).getDays() < 0 &&
-                    Period.between(booking.getStartDay(), startDay).getDays() > 0)
+            if ((DAYS.between(booking.getEndDay(), startDay) < 0 &&
+                    DAYS.between(booking.getStartDay(), startDay) >= 0)
                     && booking.getNameService().getNameService().equals(facility.getNameService())) {
                 System.out.println("Ngày bạn đặt dịch vụ này đã có người sử dụng, mời bạn tạo lại.");
                 return;
-            } else if (Period.between(endDay, booking.getStartDay()).getDays() < 0
+            } else if ((DAYS.between(endDay, booking.getStartDay()) < 0 && DAYS.between(startDay, booking.getStartDay()) > 0)
                     && booking.getNameService().getNameService().equals(facility.getNameService())) {
                 System.out.println("Ngày kết thúc của bạn đã cấn qua thời gian sử dụng của khách hàng khác. Vui lòng tạo lại!!!");
                 return;
@@ -135,7 +136,7 @@ public class BookingServiceImpl implements BookingService {
         System.out.println("Tạo hợp đồng cho booking!");
         Booking b = null;
         for (Booking booking : bookings) {
-            if(booking.getStatus() == 0) {
+            if (booking.getStatus() == 0) {
                 System.out.println("Mã booking: " + booking.getBookingId() + ", mã khách hàng: " + booking.getCustomerId().getPersonId()
                         + ", tên dịch vụ: " + booking.getNameService().getNameService());
                 b = booking;

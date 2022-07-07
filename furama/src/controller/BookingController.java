@@ -41,6 +41,7 @@ public class BookingController {
                 case "5":
                     break;
                 case "6":
+                    System.out.println("Quay về menu");
                     break;
                 default:
                     System.out.println("Lựa chọn của bạn chưa có! Vui lòng chọn lại");

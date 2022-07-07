@@ -33,8 +33,9 @@ public class RoomServiceImpl implements ObjectService {
                 return facility;
             }
         }
-        String id = "SVRO-";
+        String id;
         do {
+            id = "SVRO-";
             System.out.print("Nhập mã dịch vụ (gồm có 4 số): ");
             id += scanner.nextLine();
         } while (!CheckRegex.checkRegexFacilityId(id));

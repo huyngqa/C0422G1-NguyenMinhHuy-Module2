@@ -3,6 +3,9 @@ package common;
 import java.time.LocalDate;
 import java.time.Period;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
+
 public class CheckException {
     public static void checkDateOfBirth(LocalDate dateOfBirth) throws UserException {
         LocalDate now = LocalDate.now();
@@ -14,7 +17,7 @@ public class CheckException {
     }
 
     public static void checkDateEndBooking(LocalDate startDay, LocalDate endDay) throws UserException {
-        boolean checkEndDay = Period.between(startDay, endDay).getDays() < 0;
+        boolean checkEndDay = DAYS.between(startDay, endDay) < 0;
         if (checkEndDay) {
             throw new UserException("Ngày kết thúc không được trước ngày bắt đầu");
         }
@@ -22,7 +25,7 @@ public class CheckException {
 
     public static void checkDateStartBooking(LocalDate startDay) throws UserException {
         LocalDate now = LocalDate.now();
-        boolean checkStartDay = Period.between(now, startDay).getDays() < 0;
+        boolean checkStartDay = DAYS.between(now, startDay) < 0;
         if (checkStartDay) {
             throw new UserException("Ngày bắt đầu không được trước ngày hiện tại");
         }

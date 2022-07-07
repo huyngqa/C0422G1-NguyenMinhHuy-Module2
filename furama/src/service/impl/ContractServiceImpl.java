@@ -23,7 +23,6 @@ public class ContractServiceImpl implements ContractService {
     private final String PATH_FILE_CUSTOMER = "furama/src/data/customer.csv";
     private final String PATH_FILE_CONTRACT = "furama/src/data/contract.csv";
     private BookingService bookingService = new BookingServiceImpl();
-    private CustomerService customerService = new CustomerServiceImpl();
 
     @Override
     public void add() {

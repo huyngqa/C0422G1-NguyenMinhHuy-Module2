@@ -33,8 +33,9 @@ public class VillaServiceImpl implements ObjectService {
                 return facility;
             }
         }
-        String id = "SVVL-";
+        String id;
         do {
+            id = "SVVL-";
             System.out.print("Nhập mã dịch vụ (gồm có 4 số): ");
             id += scanner.nextLine();
         } while (!CheckRegex.checkRegexFacilityId(id));

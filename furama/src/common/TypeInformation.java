@@ -22,7 +22,7 @@ public class TypeInformation {
                     sex = "nữ";
                     break;
                 case "3":
-                    sex = "lgbts";
+                    sex = "LGBTS";
                     break;
                 default:
                     System.out.println("Bạn chọn chưa đúng! Vui lòng chọn lại");
