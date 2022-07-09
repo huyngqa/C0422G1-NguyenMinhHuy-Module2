@@ -75,6 +75,7 @@ public class VillaServiceImpl implements ObjectService {
         double swimmingPoolArea;
         while (true) {
             try {
+
                 System.out.print("Nhập diện tích hồ bơi: ");
                 swimmingPoolArea = Double.parseDouble(scanner.nextLine());
                 CheckException.checkArea(swimmingPoolArea);

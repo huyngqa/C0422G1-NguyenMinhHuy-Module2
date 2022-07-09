@@ -13,8 +13,6 @@ public class FacilityController {
     private static Scanner scanner = new Scanner(System.in);
     private static FacilityService facilityService = new FacilityServiceImpl();
     private static ObjectService facility;
-//    private static ObjectService houseService = new HouseServiceImpl();
-//    private static ObjectService roomService = new RoomServiceImpl();
 
     public static void displayFacilityMenu() {
         String choose = "";
@@ -25,7 +23,7 @@ public class FacilityController {
                     "\n 3. Hiển thị danh sách đang bảo trì" +
                     "\n 4. Bảo trì dịch vụ" +
                     "\n 5. Bảo trì tất cả dịch vụ" +
-                    "\n 4. Quay lại menu");
+                    "\n 6. Quay lại menu");
             System.out.print("Nhập lựa chọn của bạn: ");
             choose = scanner.nextLine();
             System.out.println();

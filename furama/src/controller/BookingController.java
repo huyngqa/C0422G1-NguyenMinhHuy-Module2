@@ -39,6 +39,7 @@ public class BookingController {
                     contractService.display();
                     break;
                 case "5":
+                    contractService.editById("");
                     break;
                 case "6":
                     System.out.println("Quay về menu");

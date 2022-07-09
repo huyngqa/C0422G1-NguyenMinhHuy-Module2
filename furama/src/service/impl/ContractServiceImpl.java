@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class ContractServiceImpl implements ContractService {
     private Scanner scanner = new Scanner(System.in);
     private final String PATH_FILE_BOOKING = "furama/src/data/booking.csv";
@@ -44,27 +46,11 @@ public class ContractServiceImpl implements ContractService {
             System.out.println("Đã xử lí hết booking");
             return;
         }
-        int depositAdvance;
-        while (true) {
-            try {
-                System.out.print("Nhập số tiền cọc trước: ");
-                depositAdvance = Integer.parseInt(scanner.nextLine());
-                CheckException.checkInteger(depositAdvance);
-                break;
-            } catch (NumberFormatException | UserException exception) {
-                System.out.println(exception.getMessage());
-            }
-        }
-        int totalPayment;
-        while (true) {
-            try {
-                System.out.print("Nhập tổng số tiền thanh toán: ");
-                totalPayment = Integer.parseInt(scanner.nextLine());
-                CheckException.checkInteger(totalPayment);
-                break;
-            } catch (NumberFormatException | UserException exception) {
-                System.out.println(exception.getMessage());
-            }
+
+        int totalPayment = booking.getNameService().getRentalCosts();
+        int countDay = (int) DAYS.between(booking.getStartDay(), booking.getEndDay());
+        if(countDay !=0) {
+            totalPayment *= countDay;
         }
         Map<Customer, Integer> customers = ReadFurama.readCustomerToCSV(PATH_FILE_CUSTOMER);
         String choice;
@@ -78,15 +64,31 @@ public class ContractServiceImpl implements ContractService {
                     choice = scanner.nextLine();
                     if (choice.equalsIgnoreCase("yes")) {
                         totalPayment -= totalPayment * customers.get(customer) / 100;
-                        customers.replace(customer,0);
+                        customers.replace(customer, 0);
                         break;
-                    } else if(!choice.equalsIgnoreCase("no")) {
+                    } else if (!choice.equalsIgnoreCase("no")) {
                         System.out.print("Vui lòng chọn: ");
                         System.err.println("YES/NO!!!");
                         continue;
                     }
                     break;
                 }
+            }
+        }
+        System.out.println("Tổng tiền: " + totalPayment);
+        int depositAdvance;
+        while (true) {
+            try {
+                System.out.print("Nhập số tiền cọc trước: ");
+                depositAdvance = Integer.parseInt(scanner.nextLine());
+                CheckException.checkInteger(depositAdvance);
+                if(depositAdvance > totalPayment) {
+                    System.err.println("Tiền cọc không được lớn hơn tổng tiền");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException | UserException exception) {
+                System.out.println(exception.getMessage());
             }
         }
         Contract contract = new Contract(idContract, booking, depositAdvance, totalPayment, booking);
@@ -111,6 +113,11 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public void editById(String id) {
-
+        List<Contract> contracts = ReadFurama.readContractToCSV(PATH_FILE_CONTRACT);
+        if (contracts.isEmpty()) {
+            System.err.println("Chưa có dữ liệu");
+        } else {
+            System.err.println("Bút sa gà chết, hợp đồng kí rồi không thể sửa!!!");
+        }
     }
 }

@@ -15,7 +15,7 @@ public class PromotionController {
         do {
             System.out.println("Lựa chọn của bạn " +
                     "\n 1. Hiển thị danh sách khách hàng sử dụng dịch vụ" +
-                    "\n 2. Danh sách hiển thị khách hàng nhận được voucher" +
+                    "\n 2. Phát voucher cho khách hàng" +
                     "\n 3. Quay về menu");
             System.out.print("Nhập vào lựa chọn của bạn: ");
             choose = scanner.nextLine();

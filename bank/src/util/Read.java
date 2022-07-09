@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Read {
     private static List<String> readObjectToCSV(String pathFile) {
-        float i = 30000000000.12f;
         List<String> strings = new ArrayList<>();
         BufferedReader bufferedReader = null;
         try {
@@ -50,5 +49,10 @@ public class Read {
             }
         }
         return accounts;
+    }
+
+    public static int readLastBankId(String pathFile) {
+        List<String> strings = readObjectToCSV(pathFile);
+        return Integer.parseInt(strings.get(0));
     }
 }

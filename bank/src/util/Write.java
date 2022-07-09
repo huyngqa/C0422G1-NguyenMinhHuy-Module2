@@ -36,4 +36,7 @@ public class Write {
         }
         writeObjectToCSV(strings, pathFile, append);
     }
+    public static void writeLastBankId(String id, String pathFile  ) {
+
+    }
 }

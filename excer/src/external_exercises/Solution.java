@@ -1,9 +1,17 @@
 package external_exercises;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 public class Solution {
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 3};
-        System.out.println(solution(arr));
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        if(s.equals("")) {
+            System.out.println("123123123");
+        }
     }
     public static boolean solution(int[] arr) {
         int a = arr[0];
